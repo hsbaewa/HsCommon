@@ -3,8 +3,8 @@ package kr.co.hs.common.sample;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
+import kr.co.hs.app.HsActivity;
 import kr.co.hs.common.sample.R;
-import kr.co.hs.common.app.HsActivity;
 
 /**
  * Created by Bae on 2016-12-29.
