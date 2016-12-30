@@ -1,9 +1,12 @@
 package kr.co.hs.content;
 
+import android.annotation.TargetApi;
 import android.content.SharedPreferences;
+import android.os.Build;
 
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -89,7 +92,9 @@ public class HsPreferences implements IHsPreferences {
                 }else if(obj instanceof Boolean){
                     edit.putBoolean(key, (Boolean) obj);
                 }else if(obj instanceof Set){
-                    edit.putStringSet(key, (Set<String>) obj);
+                    if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB){
+                        edit.putStringSet(key, (Set<String>) obj);
+                    }
                 }
                 this.mCacheDataMap.put(key, obj);
             }
@@ -258,6 +263,7 @@ public class HsPreferences implements IHsPreferences {
         }
     }
 
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     @Override
     public Set<String> getStringSet(String key, Set<String> def) {
         if(this.mCacheDataMap.containsKey(key)){
@@ -286,6 +292,27 @@ public class HsPreferences implements IHsPreferences {
                 return val;
             }
         }
+    }
+
+    @Override
+    public Map<String, ?> getAll() {
+        return mSharedPreferences.getAll();
+    }
+
+    @Override
+    public void syncCache() {
+        Map<String, ?> allDatas = getAll();
+        Iterator<String> keyset = allDatas.keySet().iterator();
+        if(keyset.hasNext()){
+            String key = keyset.next();
+            Object value = allDatas.get(key);
+            mCacheDataMap.put(key, value);
+        }
+    }
+
+    @Override
+    public void clearCache() {
+        this.mCacheDataMap.clear();
     }
 
 }

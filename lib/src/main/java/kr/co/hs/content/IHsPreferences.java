@@ -1,5 +1,6 @@
 package kr.co.hs.content;
 
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -20,4 +21,8 @@ public interface IHsPreferences {
     boolean getBoolean(String key, boolean def);
     float getFloat(String key, float def);
     Set<String> getStringSet(String key, Set<String> def);
+
+    Map<String,?> getAll();
+    void syncCache();
+    void clearCache();
 }
