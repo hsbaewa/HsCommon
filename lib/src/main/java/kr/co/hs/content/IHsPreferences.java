@@ -25,4 +25,5 @@ public interface IHsPreferences {
     Map<String,?> getAll();
     void syncCache();
     void clearCache();
+    Map<String,Object> getCacheDataMap();
 }

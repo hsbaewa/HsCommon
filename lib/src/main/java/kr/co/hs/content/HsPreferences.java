@@ -315,4 +315,8 @@ public class HsPreferences implements IHsPreferences {
         this.mCacheDataMap.clear();
     }
 
+    @Override
+    public Map<String, Object> getCacheDataMap() {
+        return this.mCacheDataMap;
+    }
 }
