@@ -1,5 +1,6 @@
 package kr.co.hs.net;
 
+import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -101,21 +102,29 @@ public class HsRestClient {
         return stringBuffer.toString();
     }
 
-    public String post(String strRequestUrl, Map<String, String> header, int timeout){
+    public String post(String strRequestUrl, Map<String, String> header, String body, int timeout){
+        if(strRequestUrl.startsWith("http://")){
+            return postHttp(strRequestUrl, header, body, timeout);
+        }else if(strRequestUrl.startsWith("https://")){
+            return postHttps(strRequestUrl, header, body, timeout);
+        }else{
+            return null;
+        }
+    }
+
+    public String postHttp(String strRequestUrl, Map<String, String> header, String body, int timeout){
         StringBuffer stringBuffer = new StringBuffer();
         HttpURLConnection httpURLConnection = null;
 
         try{
             URL url = new URL(strRequestUrl);
-            if(url.toString().startsWith("http://")){
-                httpURLConnection = (HttpURLConnection) url.openConnection();
-            }else if(url.toString().startsWith("https://")){
-                HttpsURLConnection httpsURLConnection = (HttpsURLConnection) url.openConnection();
-                httpURLConnection = httpsURLConnection;
-            }
+            httpURLConnection = (HttpsURLConnection) url.openConnection();
             httpURLConnection.setRequestMethod("POST");
             httpURLConnection.setDoInput(true);
             httpURLConnection.setDoOutput(true);
+
+            httpURLConnection.setConnectTimeout(timeout);
+            httpURLConnection.setReadTimeout(timeout);
 
             if(header != null){
                 Iterator<String> keyIterator = header.keySet().iterator();
@@ -126,8 +135,13 @@ public class HsRestClient {
                 }
             }
 
-            httpURLConnection.setConnectTimeout(timeout);
-            httpURLConnection.setReadTimeout(timeout);
+            if(body != null){
+                byte[] payload = body.getBytes();
+                BufferedOutputStream bos = new BufferedOutputStream(httpURLConnection.getOutputStream());
+                bos.write(payload, 0,payload.length);
+                bos.flush();
+            }
+
 
             int responseCode = httpURLConnection.getResponseCode();
             if(responseCode == HttpURLConnection.HTTP_OK){
@@ -141,6 +155,53 @@ public class HsRestClient {
             e.printStackTrace();
         }finally {
             httpURLConnection.disconnect();
+        }
+        return stringBuffer.toString();
+    }
+
+    public String postHttps(String strRequestUrl, Map<String, String> header, String body, int timeout){
+        StringBuffer stringBuffer = new StringBuffer();
+        HttpsURLConnection httpsURLConnection = null;
+
+        try{
+            URL url = new URL(strRequestUrl);
+            httpsURLConnection = (HttpsURLConnection) url.openConnection();
+            httpsURLConnection.setRequestMethod("POST");
+            httpsURLConnection.setDoInput(true);
+            httpsURLConnection.setDoOutput(true);
+
+            httpsURLConnection.setConnectTimeout(timeout);
+            httpsURLConnection.setReadTimeout(timeout);
+
+            if(header != null){
+                Iterator<String> keyIterator = header.keySet().iterator();
+                while(keyIterator.hasNext()){
+                    String key = keyIterator.next();
+                    String value = header.get(key);
+                    httpsURLConnection.addRequestProperty(key, value);
+                }
+            }
+
+            if(body != null){
+                byte[] payload = body.getBytes();
+                BufferedOutputStream bos = new BufferedOutputStream(httpsURLConnection.getOutputStream());
+                bos.write(payload, 0,payload.length);
+                bos.flush();
+            }
+
+
+            int responseCode = httpsURLConnection.getResponseCode();
+            if(responseCode == HttpURLConnection.HTTP_OK){
+                String line;
+                BufferedReader br = new BufferedReader(new InputStreamReader(httpsURLConnection.getInputStream()));
+                while((line = br.readLine())!=null){
+                    stringBuffer.append(line);
+                }
+            }
+        }catch (IOException e){
+            e.printStackTrace();
+        }finally {
+            httpsURLConnection.disconnect();
         }
         return stringBuffer.toString();
     }
