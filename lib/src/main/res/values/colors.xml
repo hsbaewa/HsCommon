@@ -49,6 +49,21 @@
     <color name="colorBrown800">#4E342E</color>
     <color name="colorBrown900">#3E2723</color>
 
+    <color name="colorIndigo050">#E8EAF6</color>
+    <color name="colorIndigo100">#C5CAE9</color>
+    <color name="colorIndigo200">#9FA8DA</color>
+    <color name="colorIndigo300">#7986CB</color>
+    <color name="colorIndigo400">#5C6BC0</color>
+    <color name="colorIndigo500">#3F51B5</color>
+    <color name="colorIndigo600">#3949AB</color>
+    <color name="colorIndigo700">#303F9F</color>
+    <color name="colorIndigo800">#283593</color>
+    <color name="colorIndigo900">#1A237E</color>
+
+    <color name="colorIndigoA100">#8C9EFF</color>
+    <color name="colorIndigoA200">#536DFE</color>
+    <color name="colorIndigoA400">#3D5AFE</color>
+    <color name="colorIndigoA700">#304FFE</color>
 
     <color name="colorBlue050">#E3F2FD</color>
     <color name="colorBlue100">#BBDEFB</color>
