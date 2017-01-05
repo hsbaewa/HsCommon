@@ -9,6 +9,9 @@ import java.util.HashMap;
 /**
  * Created by Bae on 2016-12-27.
  */
+
+//HsFragmentPager가 생기면서 Deprecated
+@Deprecated
 public abstract class HsFragmentStatePagerAdapter extends FragmentStatePagerAdapter {
 
     private HashMap<Integer, Boolean> mReloadState;

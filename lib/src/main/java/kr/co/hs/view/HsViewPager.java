@@ -6,16 +6,16 @@ import android.util.AttributeSet;
 
 /**
  * Created by Bae on 2016-12-27.
+ * HsFragmentPager가 생기면서 Deprecated
  */
+@Deprecated
 public class HsViewPager extends ViewPager {
 
     private PageWatcher mPageWatcher = null;
 
-
     public HsViewPager(Context context) {
         super(context);
     }
-
     public HsViewPager(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
