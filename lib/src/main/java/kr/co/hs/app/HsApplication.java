@@ -2,9 +2,14 @@ package kr.co.hs.app;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.telephony.TelephonyManager;
+
+import java.util.List;
 
 import kr.co.hs.content.HsPreferences;
 
@@ -33,6 +38,46 @@ public class HsApplication extends Application implements IHsApplication{
     @Override
     public HsPreferences getDefaultPreference() {
         return mPreference;
+    }
+
+    /**
+     * 패키지 매니저 관련 depth 줄이기 위하여 추가
+     * @param packageName
+     * @param flags
+     * @return
+     * @throws PackageManager.NameNotFoundException
+     */
+    public ApplicationInfo getApplicationInfo(String packageName, int flags) throws PackageManager.NameNotFoundException {
+        return getPackageManager().getApplicationInfo(packageName, flags);
+    }
+
+    /**
+     * 패키지 매니저 관련 depth 줄이기 위하여 추가
+     * @param packageName
+     * @param flags
+     * @return
+     * @throws PackageManager.NameNotFoundException
+     */
+    public PackageInfo getPackageInfo(String packageName, int flags) throws PackageManager.NameNotFoundException {
+        return getPackageManager().getPackageInfo(packageName, flags);
+    }
+
+    /**
+     * 패키지 매니저 관련 depth 줄이기 위하여 추가
+     * @param flags
+     * @return
+     */
+    public List<ApplicationInfo> getInstalledApplications(int flags){
+        return getPackageManager().getInstalledApplications(flags);
+    }
+
+    /**
+     * 패키지 매니저 관련 depth 줄이기 위하여 추가
+     * @param flags
+     * @return
+     */
+    public List<PackageInfo> getInstalledPackages(int flags){
+        return getPackageManager().getInstalledPackages(flags);
     }
 
 
