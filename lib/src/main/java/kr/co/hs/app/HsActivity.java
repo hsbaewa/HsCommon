@@ -6,11 +6,17 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+
+import java.util.List;
 
 import kr.co.hs.HsHandler;
 import kr.co.hs.R;
@@ -22,7 +28,7 @@ import kr.co.hs.content.HsPreferences;
 /**
  * Created by Bae on 2016-11-21.
  */
-abstract public class HsActivity extends AppCompatActivity implements HsHandler.OnHandleMessage, HsUIConstant, DialogInterface.OnDismissListener, IHsActivity{
+abstract public class HsActivity extends AppCompatActivity implements HsHandler.OnHandleMessage, HsUIConstant, DialogInterface.OnDismissListener, IHs, IHsPackageManager{
 
     private HsHandler mHandler;
     private OnRequestPermissionResult mOnRequestPermissionResult;
@@ -284,9 +290,8 @@ abstract public class HsActivity extends AppCompatActivity implements HsHandler.
         }
     }
 
-    @Override
-    public IHsApplication getHsApplication() {
-        IHsApplication application = (IHsApplication) getApplicationContext();
+    public HsApplication getHsApplication() {
+        HsApplication application = (HsApplication) getApplicationContext();
         return application;
     }
 
@@ -314,5 +319,35 @@ abstract public class HsActivity extends AppCompatActivity implements HsHandler.
             }
         }
         return getHsApplication().getDeviceId();
+    }
+
+    @Override
+    public ApplicationInfo getApplicationInfo(String packageName, int flags) throws PackageManager.NameNotFoundException {
+        return getHsApplication().getApplicationInfo(packageName, flags);
+    }
+
+    @Override
+    public Drawable loadIcon(String packageName) throws PackageManager.NameNotFoundException {
+        return getHsApplication().loadIcon(packageName);
+    }
+
+    @Override
+    public CharSequence loadLabel(String packageName) throws PackageManager.NameNotFoundException {
+        return getHsApplication().loadLabel(packageName);
+    }
+
+    @Override
+    public PackageInfo getPackageInfo(String packageName, int flags) throws PackageManager.NameNotFoundException {
+        return getHsApplication().getPackageInfo(packageName, flags);
+    }
+
+    @Override
+    public List<ApplicationInfo> getInstalledApplications(int flags) {
+        return getHsApplication().getInstalledApplications(flags);
+    }
+
+    @Override
+    public List<PackageInfo> getInstalledPackages(int flags) {
+        return getHsApplication().getInstalledPackages(flags);
     }
 }

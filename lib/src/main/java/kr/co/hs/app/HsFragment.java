@@ -5,6 +5,11 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Message;
 import android.support.annotation.NonNull;
@@ -14,8 +19,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.List;
+
 import kr.co.hs.HsHandler;
 import kr.co.hs.R;
+import kr.co.hs.content.HsBroadcastReceiver;
 import kr.co.hs.content.HsDialogInterface;
 import kr.co.hs.content.HsPermissionChecker;
 import kr.co.hs.content.HsPreferences;
@@ -24,7 +32,7 @@ import kr.co.hs.content.HsPreferences;
 /**
  * Created by Bae on 2016-11-21.
  */
-public abstract class HsFragment extends Fragment implements HsUIConstant, HsHandler.OnHandleMessage, DialogInterface.OnDismissListener, IHsFragment{
+public abstract class HsFragment extends Fragment implements HsUIConstant, HsHandler.OnHandleMessage, DialogInterface.OnDismissListener, IHs, IHsPackageManager, IHsFragment{
 
     private HsHandler handler;
     private View contentView;
@@ -319,9 +327,8 @@ public abstract class HsFragment extends Fragment implements HsUIConstant, HsHan
             return null;
     }
 
-    @Override
-    public IHsApplication getHsApplication() {
-        IHsApplication application = (IHsApplication) getContext().getApplicationContext();
+    public HsApplication getHsApplication() {
+        HsApplication application = (HsApplication) getContext().getApplicationContext();
         return application;
     }
 
@@ -358,5 +365,44 @@ public abstract class HsFragment extends Fragment implements HsUIConstant, HsHan
     }
     int getPagerAdapterPosition(){
         return this.mPagerAdapterPosition;
+    }
+
+    public PackageManager getPackageManager(){
+        return getContext().getPackageManager();
+    }
+
+    @Override
+    public ApplicationInfo getApplicationInfo(String packageName, int flags) throws PackageManager.NameNotFoundException {
+        return getHsApplication().getApplicationInfo(packageName, flags);
+    }
+
+    @Override
+    public Drawable loadIcon(String packageName) throws PackageManager.NameNotFoundException {
+        return getHsApplication().loadIcon(packageName);
+    }
+
+    @Override
+    public CharSequence loadLabel(String packageName) throws PackageManager.NameNotFoundException {
+        return getHsApplication().loadLabel(packageName);
+    }
+
+    @Override
+    public PackageInfo getPackageInfo(String packageName, int flags) throws PackageManager.NameNotFoundException {
+        return getHsApplication().getPackageInfo(packageName, flags);
+    }
+
+    @Override
+    public List<ApplicationInfo> getInstalledApplications(int flags) {
+        return getHsApplication().getInstalledApplications(flags);
+    }
+
+    @Override
+    public List<PackageInfo> getInstalledPackages(int flags) {
+        return getHsApplication().getInstalledPackages(flags);
+    }
+
+    @Override
+    public Intent registerReceiver(HsBroadcastReceiver receiver, IntentFilter filter) {
+        return getContext().registerReceiver(receiver, filter);
     }
 }

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.graphics.drawable.Drawable;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.telephony.TelephonyManager;
@@ -16,7 +17,7 @@ import kr.co.hs.content.HsPreferences;
 /**
  * Created by Bae on 2016-12-23.
  */
-public class HsApplication extends Application implements IHsApplication{
+public class HsApplication extends Application implements IHsApplication, IHsPackageManager{
 
     private static final String PREFERENCE_KEY_DEVICE_ID = "HsDeviceID";
 
@@ -49,6 +50,14 @@ public class HsApplication extends Application implements IHsApplication{
      */
     public ApplicationInfo getApplicationInfo(String packageName, int flags) throws PackageManager.NameNotFoundException {
         return getPackageManager().getApplicationInfo(packageName, flags);
+    }
+
+    public Drawable loadIcon(String packageName) throws PackageManager.NameNotFoundException {
+        return getApplicationInfo(packageName, PackageManager.GET_META_DATA).loadIcon(getPackageManager());
+    }
+
+    public CharSequence loadLabel(String packageName) throws PackageManager.NameNotFoundException {
+        return getApplicationInfo(packageName, PackageManager.GET_META_DATA).loadLabel(getPackageManager());
     }
 
     /**
