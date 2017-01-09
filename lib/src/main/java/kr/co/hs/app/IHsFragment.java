@@ -10,4 +10,5 @@ import kr.co.hs.content.HsBroadcastReceiver;
  */
 public interface IHsFragment extends IHs{
     Intent registerReceiver(HsBroadcastReceiver receiver, IntentFilter filter);
+    void unregisterReceiver(HsBroadcastReceiver receiver);
 }

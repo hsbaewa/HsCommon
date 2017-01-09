@@ -405,4 +405,9 @@ public abstract class HsFragment extends Fragment implements HsUIConstant, HsHan
     public Intent registerReceiver(HsBroadcastReceiver receiver, IntentFilter filter) {
         return getContext().registerReceiver(receiver, filter);
     }
+
+    @Override
+    public void unregisterReceiver(HsBroadcastReceiver receiver) {
+        getContext().unregisterReceiver(receiver);
+    }
 }
