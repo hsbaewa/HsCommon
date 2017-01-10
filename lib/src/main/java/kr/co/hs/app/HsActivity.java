@@ -6,6 +6,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -16,10 +17,12 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import kr.co.hs.HsHandler;
 import kr.co.hs.R;
+import kr.co.hs.content.HsBroadcastReceiver;
 import kr.co.hs.content.HsDialogInterface;
 import kr.co.hs.content.HsPermissionChecker;
 import kr.co.hs.content.HsPreferences;
@@ -28,7 +31,7 @@ import kr.co.hs.content.HsPreferences;
 /**
  * Created by Bae on 2016-11-21.
  */
-abstract public class HsActivity extends AppCompatActivity implements HsHandler.OnHandleMessage, HsUIConstant, DialogInterface.OnDismissListener, IHs, IHsPackageManager{
+abstract public class HsActivity extends AppCompatActivity implements HsHandler.OnHandleMessage, HsUIConstant, DialogInterface.OnDismissListener, IHs, IHsPackageManager, IHsRegisterBroadcastReceiver{
 
     private HsHandler mHandler;
     private OnRequestPermissionResult mOnRequestPermissionResult;
@@ -36,6 +39,8 @@ abstract public class HsActivity extends AppCompatActivity implements HsHandler.
 
     private Dialog mDialog;
 
+    //BroadcastReceiver 등록되있는건지 확인 가능한 구조 만들자
+    private final ArrayList<HsBroadcastReceiver> mBroadcastReceiverList = new ArrayList<>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -368,5 +373,29 @@ abstract public class HsActivity extends AppCompatActivity implements HsHandler.
     @Override
     public List<PackageInfo> getInstalledPackages(int flags) {
         return getHsApplication().getInstalledPackages(flags);
+    }
+
+    @Override
+    public Intent registerReceiver(HsBroadcastReceiver broadcastReceiver, IntentFilter filter) {
+        if(mBroadcastReceiverList != null && !mBroadcastReceiverList.contains(broadcastReceiver)){
+            mBroadcastReceiverList.add(broadcastReceiver);
+        }
+        return super.registerReceiver(broadcastReceiver, filter);
+    }
+
+    @Override
+    public void unregisterReceiver(HsBroadcastReceiver receiver) {
+        if(mBroadcastReceiverList != null && mBroadcastReceiverList.contains(receiver)){
+            mBroadcastReceiverList.remove(mBroadcastReceiverList);
+        }
+        super.unregisterReceiver(receiver);
+    }
+
+    @Override
+    public boolean isRegisteredReceiver(HsBroadcastReceiver broadcastReceiver) {
+        if(mBroadcastReceiverList != null && mBroadcastReceiverList.contains(broadcastReceiver))
+            return true;
+        else
+            return false;
     }
 }

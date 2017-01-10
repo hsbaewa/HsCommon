@@ -29,5 +29,19 @@ public abstract class HsBroadcastReceiver extends BroadcastReceiver {
         }
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof HsBroadcastReceiver){
+            HsBroadcastReceiver receiver = (HsBroadcastReceiver) obj;
+            String targetClsName = receiver.getClass().getName();
+            String currentClsName = getClass().getName();
+            if(targetClsName.equals(currentClsName)){
+                return true;
+            }else{
+                return false;
+            }
+        }
+        return super.equals(obj);
+    }
     public abstract void onActionReceive(Context context, String action, Intent intent);
 }

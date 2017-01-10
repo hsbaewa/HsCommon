@@ -4,6 +4,7 @@ import android.app.IntentService;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -12,16 +13,22 @@ import android.os.Binder;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import kr.co.hs.content.HsBroadcastReceiver;
 import kr.co.hs.content.HsPreferences;
 
 /**
  * Created by Bae on 2016-12-06.
  */
-public abstract class HsIntentService extends IntentService implements IHs, IHsPackageManager{
+public abstract class HsIntentService extends IntentService implements IHs, IHsPackageManager, IHsRegisterBroadcastReceiver{
     private static final String TAG = "HsIntentService";
 
     private final HsIntentServiceBinder mBinder = new HsIntentServiceBinder();
+
+    //BroadcastReceiver 등록되있는건지 확인 가능한 구조 만들자
+    private final ArrayList<HsBroadcastReceiver> mBroadcastReceiverList = new ArrayList<>();
 
     public HsIntentService() {
         super(TAG);
@@ -118,5 +125,29 @@ public abstract class HsIntentService extends IntentService implements IHs, IHsP
     @Override
     public List<PackageInfo> getInstalledPackages(int flags) {
         return getHsApplication().getInstalledPackages(flags);
+    }
+
+    @Override
+    public Intent registerReceiver(HsBroadcastReceiver broadcastReceiver, IntentFilter filter) {
+        if(mBroadcastReceiverList != null && !mBroadcastReceiverList.contains(broadcastReceiver)){
+            mBroadcastReceiverList.add(broadcastReceiver);
+        }
+        return super.registerReceiver(broadcastReceiver, filter);
+    }
+
+    @Override
+    public void unregisterReceiver(HsBroadcastReceiver receiver) {
+        if(mBroadcastReceiverList != null && mBroadcastReceiverList.contains(receiver)){
+            mBroadcastReceiverList.remove(mBroadcastReceiverList);
+        }
+        super.unregisterReceiver(receiver);
+    }
+
+    @Override
+    public boolean isRegisteredReceiver(HsBroadcastReceiver broadcastReceiver) {
+        if(mBroadcastReceiverList != null && mBroadcastReceiverList.contains(broadcastReceiver))
+            return true;
+        else
+            return false;
     }
 }

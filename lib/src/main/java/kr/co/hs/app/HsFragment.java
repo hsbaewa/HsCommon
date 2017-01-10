@@ -3,6 +3,7 @@ package kr.co.hs.app;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -19,6 +20,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import kr.co.hs.HsHandler;
@@ -32,7 +34,7 @@ import kr.co.hs.content.HsPreferences;
 /**
  * Created by Bae on 2016-11-21.
  */
-public abstract class HsFragment extends Fragment implements HsUIConstant, HsHandler.OnHandleMessage, DialogInterface.OnDismissListener, IHs, IHsPackageManager, IHsFragment{
+public abstract class HsFragment extends Fragment implements HsUIConstant, HsHandler.OnHandleMessage, DialogInterface.OnDismissListener, IHs, IHsPackageManager, IHsFragment, IHsRegisterBroadcastReceiver{
 
     private HsHandler handler;
     private View contentView;
@@ -44,6 +46,9 @@ public abstract class HsFragment extends Fragment implements HsUIConstant, HsHan
     private Dialog mDialog;
 
     private int mPagerAdapterPosition;
+
+    //BroadcastReceiver 등록되있는건지 확인 가능한 구조 만들자
+    private final ArrayList<HsBroadcastReceiver> mBroadcastReceiverList = new ArrayList<>();
 
     public HsHandler getHandler() {
         return handler;
@@ -421,12 +426,36 @@ public abstract class HsFragment extends Fragment implements HsUIConstant, HsHan
     }
 
     @Override
-    public Intent registerReceiver(HsBroadcastReceiver receiver, IntentFilter filter) {
+    public Intent registerReceiver(BroadcastReceiver receiver, IntentFilter filter) {
         return getContext().registerReceiver(receiver, filter);
     }
 
     @Override
-    public void unregisterReceiver(HsBroadcastReceiver receiver) {
+    public void unregisterReceiver(BroadcastReceiver receiver) {
         getContext().unregisterReceiver(receiver);
+    }
+
+    @Override
+    public Intent registerReceiver(HsBroadcastReceiver broadcastReceiver, IntentFilter filter) {
+        if(mBroadcastReceiverList != null && !mBroadcastReceiverList.contains(broadcastReceiver)){
+            mBroadcastReceiverList.add(broadcastReceiver);
+        }
+        return registerReceiver((BroadcastReceiver) broadcastReceiver, filter);
+    }
+
+    @Override
+    public void unregisterReceiver(HsBroadcastReceiver receiver) {
+        if(mBroadcastReceiverList != null && mBroadcastReceiverList.contains(receiver)){
+            mBroadcastReceiverList.remove(mBroadcastReceiverList);
+        }
+        unregisterReceiver((BroadcastReceiver) receiver);
+    }
+
+    @Override
+    public boolean isRegisteredReceiver(HsBroadcastReceiver broadcastReceiver) {
+        if(mBroadcastReceiverList != null && mBroadcastReceiverList.contains(broadcastReceiver))
+            return true;
+        else
+            return false;
     }
 }
