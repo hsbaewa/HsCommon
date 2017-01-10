@@ -192,6 +192,25 @@ abstract public class HsActivity extends AppCompatActivity implements HsHandler.
     }
 
     @Override
+    public void sendMessageDelayed(int what, Object obj, long delayMillis) {
+        getHandler().sendMessageDelayed(getHandler().obtainMessage(what, obj), delayMillis);
+    }
+
+    @Override
+    public void sendMessageDelayed(int what, Bundle data, long delayMillis) {
+        Message msg = getHandler().obtainMessage(what);
+        msg.setData(data);
+        getHandler().sendMessageDelayed(msg, delayMillis);
+    }
+
+    @Override
+    public void sendMessageDelayed(int what, Object obj, Bundle data, long delayMillis) {
+        Message msg = getHandler().obtainMessage(what, obj);
+        msg.setData(data);
+        getHandler().sendMessageDelayed(msg, delayMillis);
+    }
+
+    @Override
     public void showAlertDialog(String title, String message) {
         Bundle data = new Bundle();
         data.putString(DIALOG_TITLE, title);

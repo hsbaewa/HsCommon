@@ -45,4 +45,7 @@ public interface HsUIConstant extends HsConstant {
     void sendMessage(int what, Object obj, Bundle data);
 
     void sendMessageDelayed(int what, long delayMillis);
+    void sendMessageDelayed(int what, Object obj, long delayMillis);
+    void sendMessageDelayed(int what, Bundle data, long delayMillis);
+    void sendMessageDelayed(int what, Object obj, Bundle data, long delayMillis);
 }
