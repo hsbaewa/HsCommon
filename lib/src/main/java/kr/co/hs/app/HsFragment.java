@@ -446,7 +446,7 @@ public abstract class HsFragment extends Fragment implements HsUIConstant, HsHan
     @Override
     public void unregisterReceiver(HsBroadcastReceiver receiver) {
         if(mBroadcastReceiverList != null && mBroadcastReceiverList.contains(receiver)){
-            mBroadcastReceiverList.remove(mBroadcastReceiverList);
+            mBroadcastReceiverList.remove(receiver);
         }
         unregisterReceiver((BroadcastReceiver) receiver);
     }

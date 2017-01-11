@@ -115,7 +115,7 @@ public abstract class HsService extends Service implements IHs, IHsPackageManage
     @Override
     public void unregisterReceiver(HsBroadcastReceiver receiver) {
         if(mBroadcastReceiverList != null && mBroadcastReceiverList.contains(receiver)){
-            mBroadcastReceiverList.remove(mBroadcastReceiverList);
+            mBroadcastReceiverList.remove(receiver);
         }
         super.unregisterReceiver(receiver);
     }

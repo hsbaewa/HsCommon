@@ -138,7 +138,7 @@ public abstract class HsIntentService extends IntentService implements IHs, IHsP
     @Override
     public void unregisterReceiver(HsBroadcastReceiver receiver) {
         if(mBroadcastReceiverList != null && mBroadcastReceiverList.contains(receiver)){
-            mBroadcastReceiverList.remove(mBroadcastReceiverList);
+            mBroadcastReceiverList.remove(receiver);
         }
         super.unregisterReceiver(receiver);
     }
