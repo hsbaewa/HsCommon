@@ -173,7 +173,7 @@ public abstract class HsFragment extends Fragment implements HsUIConstant, HsHan
                 Bundle data = msg.getData();
                 String message = data.getString(TOAST_MESSAGE);
                 int duration = data.getInt(TOAST_DURATION, Toast.LENGTH_SHORT);
-                Toast.makeText(getContext(), message, duration);
+                Toast.makeText(getContext(), message, duration).show();
                 return true;
             }
         }

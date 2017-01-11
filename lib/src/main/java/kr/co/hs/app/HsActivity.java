@@ -148,7 +148,7 @@ abstract public class HsActivity extends AppCompatActivity implements HsHandler.
                 Bundle data = msg.getData();
                 String message = data.getString(TOAST_MESSAGE);
                 int duration = data.getInt(TOAST_DURATION, Toast.LENGTH_SHORT);
-                Toast.makeText(getContext(), message, duration);
+                Toast.makeText(getContext(), message, duration).show();
                 return true;
             }
         }
