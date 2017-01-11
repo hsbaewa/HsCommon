@@ -19,6 +19,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -166,6 +167,13 @@ public abstract class HsFragment extends Fragment implements HsUIConstant, HsHan
                 String title = data.getString(DIALOG_TITLE);
                 String message = data.getString(DIALOG_MESSAGE);
                 mDialog = ProgressDialog.show(getContext(), title, message);
+                return true;
+            }
+            case HD_SHOW_TOAST:{
+                Bundle data = msg.getData();
+                String message = data.getString(TOAST_MESSAGE);
+                int duration = data.getInt(TOAST_DURATION, Toast.LENGTH_SHORT);
+                Toast.makeText(getContext(), message, duration);
                 return true;
             }
         }
@@ -457,5 +465,22 @@ public abstract class HsFragment extends Fragment implements HsUIConstant, HsHan
             return true;
         else
             return false;
+    }
+
+    @Override
+    public void showToast(int resID, int duration) {
+        String strMessage = getString(resID);
+        Bundle bundle = new Bundle();
+        bundle.putString(TOAST_MESSAGE, strMessage);
+        bundle.putInt(TOAST_DURATION, duration);
+        sendMessage(HD_SHOW_TOAST, bundle);
+    }
+
+    @Override
+    public void showToast(String message, int duration) {
+        Bundle bundle = new Bundle();
+        bundle.putString(TOAST_MESSAGE, message);
+        bundle.putInt(TOAST_DURATION, duration);
+        sendMessage(HD_SHOW_TOAST, bundle);
     }
 }

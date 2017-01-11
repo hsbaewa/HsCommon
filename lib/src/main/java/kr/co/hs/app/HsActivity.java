@@ -16,6 +16,7 @@ import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -141,6 +142,13 @@ abstract public class HsActivity extends AppCompatActivity implements HsHandler.
                 String title = data.getString(DIALOG_TITLE);
                 String message = data.getString(DIALOG_MESSAGE);
                 mDialog = ProgressDialog.show(getContext(), title, message);
+                return true;
+            }
+            case HD_SHOW_TOAST:{
+                Bundle data = msg.getData();
+                String message = data.getString(TOAST_MESSAGE);
+                int duration = data.getInt(TOAST_DURATION, Toast.LENGTH_SHORT);
+                Toast.makeText(getContext(), message, duration);
                 return true;
             }
         }
@@ -294,6 +302,23 @@ abstract public class HsActivity extends AppCompatActivity implements HsHandler.
     @Override
     public void dismissDialog() {
         sendMessage(HD_DISMISS_DIALOG);
+    }
+
+    @Override
+    public void showToast(int resID, int duration) {
+        String strMessage = getString(resID);
+        Bundle bundle = new Bundle();
+        bundle.putString(TOAST_MESSAGE, strMessage);
+        bundle.putInt(TOAST_DURATION, duration);
+        sendMessage(HD_SHOW_TOAST, bundle);
+    }
+
+    @Override
+    public void showToast(String message, int duration) {
+        Bundle bundle = new Bundle();
+        bundle.putString(TOAST_MESSAGE, message);
+        bundle.putInt(TOAST_DURATION, duration);
+        sendMessage(HD_SHOW_TOAST, bundle);
     }
 
     @Override

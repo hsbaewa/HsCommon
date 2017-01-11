@@ -11,15 +11,20 @@ import kr.co.hs.content.HsDialogInterface;
  */
 public interface HsUIConstant extends HsConstant {
 
-    int HD_DISMISS_DIALOG = 1000;
-    int HD_SHOW_ALERT_DIALOG = 1001;
-    int HD_SHOW_PROGRESS_DIALOG = 1002;
+    int HD_DISMISS_DIALOG = Integer.MAX_VALUE;
+    int HD_SHOW_ALERT_DIALOG = Integer.MAX_VALUE-1;
+    int HD_SHOW_PROGRESS_DIALOG = Integer.MAX_VALUE-2;
+    int HD_SHOW_TOAST = Integer.MAX_VALUE-3;
+
     String DIALOG_TITLE = "DialogTitle";
     String DIALOG_MESSAGE = "DialogMessage";
     String DIALOG_POSITIVE_CAPTION = "DialogPositiveCaption";
     String DIALOG_NEGATIVE_CAPTION = "DialogNegativeCaption";
     String DIALOG_NEUTRAL_CAPTION = "DialogNeutralCaption";
     String DIALOG_LISTENER = "DialogListener";
+
+    String TOAST_MESSAGE = "ToastMessage";
+    String TOAST_DURATION = "ToastDuration";
 
     void showAlertDialog(int resTitle, int resMsg, int resPositiveCaption, int resNeutralCaption, int resNegativeCaption, HsDialogInterface.OnClickListener listener);
     void showAlertDialog(String title, String message, String positiveCaption, String neutralCaption, String negativeCaption, HsDialogInterface.OnClickListener listener);
@@ -34,6 +39,8 @@ public interface HsUIConstant extends HsConstant {
     void showProgressDialog(String title, String message);
     void showProgressDialog(String message);
     void dismissDialog();
+    void showToast(int resID, int duration);
+    void showToast(String message, int duration);
 
 
     /**
