@@ -22,7 +22,7 @@ import kr.co.hs.content.HsPreferences;
 /**
  * Created by Bae on 2016-12-06.
  */
-public abstract class HsIntentService extends IntentService implements IHs, IHsPackageManager, IHsRegisterBroadcastReceiver{
+public abstract class HsIntentService extends IntentService implements IHsService, IHsPackageManager, IHsRegisterBroadcastReceiver{
     private static final String TAG = "HsIntentService";
 
     private final HsIntentServiceBinder mBinder = new HsIntentServiceBinder();
@@ -52,18 +52,6 @@ public abstract class HsIntentService extends IntentService implements IHs, IHsP
 
     public Context getContext(){
         return this;
-    }
-
-
-    protected boolean sendPendingBroadcast(int requestCode, Intent intent, int flags){
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(getContext(), requestCode, intent, flags);
-        try {
-            pendingIntent.send();
-            return true;
-        } catch (PendingIntent.CanceledException e) {
-            e.printStackTrace();
-            return false;
-        }
     }
 
     public HsApplication getHsApplication() {
@@ -149,5 +137,33 @@ public abstract class HsIntentService extends IntentService implements IHs, IHsP
             return true;
         else
             return false;
+    }
+
+    @Override
+    public boolean sendPendingBroadcast(int requestCode, Intent intent, int flags){
+        HsApplication application = getHsApplication();
+        if(application != null){
+            return application.sendPendingBroadcast(requestCode, intent, flags);
+        }else
+            return false;
+    }
+    @Override
+    public boolean sendPendingBroadcast(int requestCode, Intent intent){
+        HsApplication application = getHsApplication();
+        if(application != null){
+            return application.sendPendingBroadcast(requestCode, intent);
+        }else{
+            return false;
+        }
+    }
+
+    @Override
+    public boolean sendPendingBroadcast(Intent intent) {
+        HsApplication application = getHsApplication();
+        if(application != null){
+            return application.sendPendingBroadcast(intent);
+        }else{
+            return false;
+        }
     }
 }

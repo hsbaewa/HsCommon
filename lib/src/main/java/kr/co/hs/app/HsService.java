@@ -20,7 +20,7 @@ import kr.co.hs.content.HsPreferences;
 /**
  * Created by Bae on 2016-11-23.
  */
-public abstract class HsService extends Service implements IHs, IHsPackageManager, IHsRegisterBroadcastReceiver{
+public abstract class HsService extends Service implements IHsService, IHsPackageManager, IHsRegisterBroadcastReceiver{
 
     private final HsBinder mBinder = new HsBinder();
 
@@ -126,5 +126,33 @@ public abstract class HsService extends Service implements IHs, IHsPackageManage
             return true;
         else
             return false;
+    }
+
+    @Override
+    public boolean sendPendingBroadcast(int requestCode, Intent intent, int flags){
+        HsApplication application = getHsApplication();
+        if(application != null){
+            return application.sendPendingBroadcast(requestCode, intent, flags);
+        }else
+            return false;
+    }
+    @Override
+    public boolean sendPendingBroadcast(int requestCode, Intent intent){
+        HsApplication application = getHsApplication();
+        if(application != null){
+            return application.sendPendingBroadcast(requestCode, intent);
+        }else{
+            return false;
+        }
+    }
+
+    @Override
+    public boolean sendPendingBroadcast(Intent intent) {
+        HsApplication application = getHsApplication();
+        if(application != null){
+            return application.sendPendingBroadcast(intent);
+        }else{
+            return false;
+        }
     }
 }

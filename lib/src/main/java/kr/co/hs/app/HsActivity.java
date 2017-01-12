@@ -32,7 +32,7 @@ import kr.co.hs.content.HsPreferences;
 /**
  * Created by Bae on 2016-11-21.
  */
-abstract public class HsActivity extends AppCompatActivity implements HsHandler.OnHandleMessage, HsUIConstant, DialogInterface.OnDismissListener, IHs, IHsPackageManager, IHsRegisterBroadcastReceiver{
+abstract public class HsActivity extends AppCompatActivity implements HsHandler.OnHandleMessage, HsUIConstant, DialogInterface.OnDismissListener, IHsActivity, IHsPackageManager, IHsRegisterBroadcastReceiver{
 
     private HsHandler mHandler;
     private OnRequestPermissionResult mOnRequestPermissionResult;
@@ -422,5 +422,33 @@ abstract public class HsActivity extends AppCompatActivity implements HsHandler.
             return true;
         else
             return false;
+    }
+
+    @Override
+    public boolean sendPendingBroadcast(int requestCode, Intent intent, int flags){
+        HsApplication application = getHsApplication();
+        if(application != null){
+            return application.sendPendingBroadcast(requestCode, intent, flags);
+        }else
+            return false;
+    }
+    @Override
+    public boolean sendPendingBroadcast(int requestCode, Intent intent){
+        HsApplication application = getHsApplication();
+        if(application != null){
+            return application.sendPendingBroadcast(requestCode, intent);
+        }else{
+            return false;
+        }
+    }
+
+    @Override
+    public boolean sendPendingBroadcast(Intent intent) {
+        HsApplication application = getHsApplication();
+        if(application != null){
+            return application.sendPendingBroadcast(intent);
+        }else{
+            return false;
+        }
     }
 }

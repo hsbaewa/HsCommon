@@ -1,7 +1,9 @@
 package kr.co.hs.app;
 
 import android.app.Application;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -17,7 +19,7 @@ import kr.co.hs.content.HsPreferences;
 /**
  * Created by Bae on 2016-12-23.
  */
-public class HsApplication extends Application implements IHsApplication, IHsPackageManager{
+public abstract class HsApplication extends Application implements IHsApplication, IHsPackageManager{
 
     private static final String PREFERENCE_KEY_DEVICE_ID = "HsDeviceID";
 
@@ -26,15 +28,10 @@ public class HsApplication extends Application implements IHsApplication, IHsPac
     @Override
     public void onCreate() {
         super.onCreate();
-        init();
-    }
-
-
-    @Override
-    public void init() {
         //default 프리퍼런스 초기화
         mPreference = new HsPreferences(PreferenceManager.getDefaultSharedPreferences(this));
     }
+
 
     @Override
     public HsPreferences getDefaultPreference() {
@@ -118,5 +115,30 @@ public class HsApplication extends Application implements IHsApplication, IHsPac
         getDefaultPreference().set(PREFERENCE_KEY_DEVICE_ID, strDeviceID);
 
         return strDeviceID;
+    }
+
+    private Context getContext(){
+        return getApplicationContext();
+    }
+
+    @Override
+    public boolean sendPendingBroadcast(int requestCode, Intent intent, int flags){
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(getContext(), requestCode, intent, flags);
+        try {
+            pendingIntent.send();
+            return true;
+        } catch (PendingIntent.CanceledException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    @Override
+    public boolean sendPendingBroadcast(int requestCode, Intent intent){
+        return sendPendingBroadcast(requestCode, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+    }
+
+    @Override
+    public boolean sendPendingBroadcast(Intent intent) {
+        return sendPendingBroadcast(0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
     }
 }

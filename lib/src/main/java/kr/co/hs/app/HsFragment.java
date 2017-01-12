@@ -35,7 +35,7 @@ import kr.co.hs.content.HsPreferences;
 /**
  * Created by Bae on 2016-11-21.
  */
-public abstract class HsFragment extends Fragment implements HsUIConstant, HsHandler.OnHandleMessage, DialogInterface.OnDismissListener, IHs, IHsPackageManager, IHsFragment, IHsRegisterBroadcastReceiver{
+public abstract class HsFragment extends Fragment implements HsUIConstant, HsHandler.OnHandleMessage, DialogInterface.OnDismissListener, IHsPackageManager, IHsFragment, IHs, IHsRegisterBroadcastReceiver{
 
     private HsHandler handler;
     private View contentView;
