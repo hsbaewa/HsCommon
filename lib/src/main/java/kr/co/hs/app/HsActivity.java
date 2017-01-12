@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
@@ -450,5 +451,46 @@ abstract public class HsActivity extends AppCompatActivity implements HsHandler.
         }else{
             return false;
         }
+    }
+
+    @Override
+    public void startActivityFromFragment(Fragment fragment, Intent intent, int requestCode, @Nullable Bundle options) {
+        intent.putExtra(EXTRA_REMOTE_CLASS, getClass().getName());
+        super.startActivityFromFragment(fragment, intent, requestCode, options);
+    }
+
+    @Override
+    public void startActivityFromFragment(Fragment fragment, Intent intent, int requestCode) {
+        intent.putExtra(EXTRA_REMOTE_CLASS, getClass().getName());
+        super.startActivityFromFragment(fragment, intent, requestCode);
+    }
+
+    @Override
+    public void startActivity(Intent intent) {
+        intent.putExtra(EXTRA_REMOTE_CLASS, getClass().getName());
+        super.startActivity(intent);
+    }
+
+    @Override
+    public void startActivity(Intent intent, Bundle options) {
+        intent.putExtra(EXTRA_REMOTE_CLASS, getClass().getName());
+        super.startActivity(intent, options);
+    }
+
+    @Override
+    public void startActivityForResult(Intent intent, int requestCode) {
+        intent.putExtra(EXTRA_REMOTE_CLASS, getClass().getName());
+        super.startActivityForResult(intent, requestCode);
+    }
+
+    @Override
+    public void startActivityForResult(Intent intent, int requestCode, @Nullable Bundle options) {
+        intent.putExtra(EXTRA_REMOTE_CLASS, getClass().getName());
+        super.startActivityForResult(intent, requestCode, options);
+    }
+
+    @Override
+    public String getRemoteClassName() {
+        return getIntent().getStringExtra(EXTRA_REMOTE_CLASS);
     }
 }

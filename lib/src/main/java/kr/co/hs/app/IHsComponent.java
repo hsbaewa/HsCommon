@@ -11,6 +11,8 @@ import kr.co.hs.content.HsPreferences;
  */
 
 public interface IHsComponent extends IHs{
+    String EXTRA_REMOTE_CLASS = "kr.co.hs.EXTRA_REMOTE_CLASS";
+
     HsPreferences getDefaultPreference();
     String getDeviceId();
 

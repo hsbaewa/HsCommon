@@ -10,6 +10,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.os.Binder;
+import android.os.Bundle;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 
@@ -165,5 +166,21 @@ public abstract class HsIntentService extends IntentService implements IHsServic
         }else{
             return false;
         }
+    }
+
+    @Override
+    public String getRemoteClassName(Intent intent) {
+        return intent.getStringExtra(EXTRA_REMOTE_CLASS);
+    }
+
+    @Override
+    public void startActivity(Intent intent) {
+        intent.putExtra(EXTRA_REMOTE_CLASS, getClass().getName());
+        super.startActivity(intent);
+    }
+    @Override
+    public void startActivity(Intent intent, Bundle options) {
+        intent.putExtra(EXTRA_REMOTE_CLASS, getClass().getName());
+        super.startActivity(intent, options);
     }
 }
