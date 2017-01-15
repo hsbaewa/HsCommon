@@ -1,15 +1,23 @@
 package kr.co.hs.net;
 
+import org.xml.sax.SAXException;
+import org.xml.sax.helpers.DefaultHandler;
+
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLConnection;
 import java.util.Iterator;
 import java.util.Map;
 
 import javax.net.ssl.HttpsURLConnection;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
 
 /**
  * Created by Bae on 2016-12-25.
@@ -17,18 +25,103 @@ import javax.net.ssl.HttpsURLConnection;
 
 public class HsRestClient {
 
-    public String get(String strRequestUrl, Map<String, String> header, int timeout) {
+    public boolean get(String strRequestUrl, Map<String, String> header, int timeout, DefaultHandler handler) throws ParserConfigurationException, SAXException, IOException {
+        SAXParserFactory saxParserFactory = SAXParserFactory.newInstance();
+        SAXParser parser = saxParserFactory.newSAXParser();
+
+        URLConnection urlConnection = null;
         if(strRequestUrl.startsWith("http://")){
-            return getHttp(strRequestUrl, header, timeout);
+            urlConnection = getHttp(strRequestUrl, header, timeout);
         }else if(strRequestUrl.startsWith("https://")){
-            return getHttps(strRequestUrl, header, timeout);
+            urlConnection = getHttps(strRequestUrl, header, timeout);
+        }else{
+            return false;
+        }
+
+        InputStream inputStream = null;
+        if(urlConnection != null){
+            try {
+                inputStream = urlConnection.getInputStream();
+                if(inputStream == null){
+                    if(urlConnection instanceof HttpURLConnection){
+                        inputStream = ((HttpURLConnection) urlConnection).getErrorStream();
+                    }else if(urlConnection instanceof HttpsURLConnection){
+                        inputStream = ((HttpsURLConnection) urlConnection).getErrorStream();
+                    }
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+                return false;
+            } finally {
+                if(urlConnection != null){
+                    if(urlConnection instanceof HttpURLConnection){
+                        ((HttpURLConnection) urlConnection).disconnect();
+                    }else if(urlConnection instanceof HttpsURLConnection){
+                        ((HttpsURLConnection) urlConnection).disconnect();
+                    }
+                }
+            }
+        }else{
+            return false;
+        }
+
+        if(inputStream == null)
+            return false;
+        parser.parse(inputStream, handler);
+        return true;
+    }
+
+    public String get(String strRequestUrl, Map<String, String> header, int timeout) {
+        URLConnection urlConnection;
+        if(strRequestUrl.startsWith("http://")){
+            urlConnection = getHttp(strRequestUrl, header, timeout);
+        }else if(strRequestUrl.startsWith("https://")){
+            urlConnection = getHttps(strRequestUrl, header, timeout);
+        }else{
+            return null;
+        }
+        if(urlConnection != null){
+            InputStream inputStream = null;
+            try {
+                inputStream = urlConnection.getInputStream();
+                if(inputStream == null){
+
+                    if(urlConnection instanceof HttpURLConnection){
+                        inputStream = ((HttpURLConnection) urlConnection).getErrorStream();
+                    }else if(urlConnection instanceof HttpsURLConnection){
+                        inputStream = ((HttpsURLConnection) urlConnection).getErrorStream();
+                    }
+                }
+
+                String line;
+                StringBuffer stringBuffer = new StringBuffer();
+                if(inputStream != null){
+                    BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
+                    while((line = br.readLine())!=null){
+                        stringBuffer.append(line);
+                    }
+                }
+
+                return stringBuffer.toString();
+            } catch (IOException e) {
+                e.printStackTrace();
+                return null;
+            } finally {
+                if(urlConnection != null){
+                    if(urlConnection instanceof HttpURLConnection){
+                        ((HttpURLConnection) urlConnection).disconnect();
+                    }else if(urlConnection instanceof HttpsURLConnection){
+                        ((HttpsURLConnection) urlConnection).disconnect();
+                    }
+                }
+            }
         }else{
             return null;
         }
     }
 
 
-    private String getHttp(String strRequestUrl, Map<String, String> header, int timeout){
+    private URLConnection getHttp(String strRequestUrl, Map<String, String> header, int timeout){
         StringBuffer stringBuffer = new StringBuffer();
         HttpURLConnection httpURLConnection = null;
 
@@ -48,24 +141,14 @@ public class HsRestClient {
             httpURLConnection.setConnectTimeout(timeout);
             httpURLConnection.setReadTimeout(timeout);
 
-            int responseCode = httpURLConnection.getResponseCode();
-            if(responseCode == HttpURLConnection.HTTP_OK){
-                String line;
-                BufferedReader br = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream()));
-                while((line = br.readLine())!=null){
-                    stringBuffer.append(line);
-                }
-            }
+            return httpURLConnection;
         }catch (IOException e){
             e.printStackTrace();
-        }finally {
-            if(httpURLConnection != null)
-                httpURLConnection.disconnect();
         }
-        return stringBuffer.toString();
+        return null;
     }
 
-    private String getHttps(String strRequestUrl, Map<String, String> header, int timeout){
+    private URLConnection getHttps(String strRequestUrl, Map<String, String> header, int timeout){
         StringBuffer stringBuffer = new StringBuffer();
         HttpsURLConnection httpsURLConnection = null;
 
@@ -85,40 +168,113 @@ public class HsRestClient {
             httpsURLConnection.setConnectTimeout(timeout);
             httpsURLConnection.setReadTimeout(timeout);
 
-            int responseCode = httpsURLConnection.getResponseCode();
-            if(responseCode == HttpURLConnection.HTTP_OK){
-                String line;
-                BufferedReader br = new BufferedReader(new InputStreamReader(httpsURLConnection.getInputStream()));
-                while((line = br.readLine())!=null){
-                    stringBuffer.append(line);
-                }
-            }
+            return httpsURLConnection;
         }catch (IOException e){
             e.printStackTrace();
-        }finally {
-            if(httpsURLConnection != null)
-                httpsURLConnection.disconnect();
         }
-        return stringBuffer.toString();
+        return null;
+    }
+
+    public boolean post(String strRequestUrl, Map<String, String> header, String body, int timeout, DefaultHandler handler) throws ParserConfigurationException, SAXException, IOException {
+        SAXParserFactory saxParserFactory = SAXParserFactory.newInstance();
+        SAXParser parser = saxParserFactory.newSAXParser();
+
+        URLConnection urlConnection = null;
+        if(strRequestUrl.startsWith("http://")){
+            urlConnection = postHttp(strRequestUrl, header, body, timeout);
+        }else if(strRequestUrl.startsWith("https://")){
+            urlConnection = postHttps(strRequestUrl, header, body, timeout);
+        }else{
+            return false;
+        }
+
+        InputStream inputStream = null;
+        if(urlConnection != null){
+            try {
+                inputStream = urlConnection.getInputStream();
+                if(inputStream == null){
+                    if(urlConnection instanceof HttpURLConnection){
+                        inputStream = ((HttpURLConnection) urlConnection).getErrorStream();
+                    }else if(urlConnection instanceof HttpsURLConnection){
+                        inputStream = ((HttpsURLConnection) urlConnection).getErrorStream();
+                    }
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+                return false;
+            } finally {
+                if(urlConnection != null){
+                    if(urlConnection instanceof HttpURLConnection){
+                        ((HttpURLConnection) urlConnection).disconnect();
+                    }else if(urlConnection instanceof HttpsURLConnection){
+                        ((HttpsURLConnection) urlConnection).disconnect();
+                    }
+                }
+            }
+        }else{
+            return false;
+        }
+
+        if(inputStream == null)
+            return false;
+        parser.parse(inputStream, handler);
+        return true;
     }
 
     public String post(String strRequestUrl, Map<String, String> header, String body, int timeout){
+        URLConnection urlConnection;
         if(strRequestUrl.startsWith("http://")){
-            return postHttp(strRequestUrl, header, body, timeout);
+            urlConnection = postHttp(strRequestUrl, header, body, timeout);
         }else if(strRequestUrl.startsWith("https://")){
-            return postHttps(strRequestUrl, header, body, timeout);
+            urlConnection = postHttps(strRequestUrl, header, body, timeout);
+        }else{
+            return null;
+        }
+        if(urlConnection != null){
+            InputStream inputStream = null;
+            try {
+                inputStream = urlConnection.getInputStream();
+                if(inputStream == null){
+                    if(urlConnection instanceof HttpURLConnection){
+                        inputStream = ((HttpURLConnection) urlConnection).getErrorStream();
+                    }else if(urlConnection instanceof HttpsURLConnection){
+                        inputStream = ((HttpsURLConnection) urlConnection).getErrorStream();
+                    }
+                }
+
+                String line;
+                StringBuffer stringBuffer = new StringBuffer();
+                if(inputStream != null){
+                    BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
+                    while((line = br.readLine())!=null){
+                        stringBuffer.append(line);
+                    }
+                }
+                return stringBuffer.toString();
+            } catch (IOException e) {
+                e.printStackTrace();
+                return null;
+            } finally {
+                if(urlConnection != null){
+                    if(urlConnection instanceof HttpURLConnection){
+                        ((HttpURLConnection) urlConnection).disconnect();
+                    }else if(urlConnection instanceof HttpsURLConnection){
+                        ((HttpsURLConnection) urlConnection).disconnect();
+                    }
+                }
+            }
         }else{
             return null;
         }
     }
 
-    public String postHttp(String strRequestUrl, Map<String, String> header, String body, int timeout){
+    private URLConnection postHttp(String strRequestUrl, Map<String, String> header, String body, int timeout){
         StringBuffer stringBuffer = new StringBuffer();
         HttpURLConnection httpURLConnection = null;
 
         try{
             URL url = new URL(strRequestUrl);
-            httpURLConnection = (HttpsURLConnection) url.openConnection();
+            httpURLConnection = (HttpURLConnection) url.openConnection();
             httpURLConnection.setRequestMethod("POST");
             httpURLConnection.setDoInput(true);
             httpURLConnection.setDoOutput(true);
@@ -142,24 +298,14 @@ public class HsRestClient {
                 bos.flush();
             }
 
-
-            int responseCode = httpURLConnection.getResponseCode();
-            if(responseCode == HttpURLConnection.HTTP_OK){
-                String line;
-                BufferedReader br = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream()));
-                while((line = br.readLine())!=null){
-                    stringBuffer.append(line);
-                }
-            }
+            return httpURLConnection;
         }catch (IOException e){
             e.printStackTrace();
-        }finally {
-            httpURLConnection.disconnect();
         }
-        return stringBuffer.toString();
+        return null;
     }
 
-    public String postHttps(String strRequestUrl, Map<String, String> header, String body, int timeout){
+    private URLConnection postHttps(String strRequestUrl, Map<String, String> header, String body, int timeout){
         StringBuffer stringBuffer = new StringBuffer();
         HttpsURLConnection httpsURLConnection = null;
 
@@ -190,19 +336,10 @@ public class HsRestClient {
             }
 
 
-            int responseCode = httpsURLConnection.getResponseCode();
-            if(responseCode == HttpURLConnection.HTTP_OK){
-                String line;
-                BufferedReader br = new BufferedReader(new InputStreamReader(httpsURLConnection.getInputStream()));
-                while((line = br.readLine())!=null){
-                    stringBuffer.append(line);
-                }
-            }
+            return httpsURLConnection;
         }catch (IOException e){
             e.printStackTrace();
-        }finally {
-            httpsURLConnection.disconnect();
         }
-        return stringBuffer.toString();
+        return null;
     }
 }
