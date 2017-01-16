@@ -499,13 +499,17 @@ abstract public class HsActivity extends AppCompatActivity implements HsHandler.
     public void onBackPressed() {
         boolean isAllowBackPressed = true;
         FragmentManager fragmentManager = getSupportFragmentManager();
-        List<Fragment> fragmentList = fragmentManager.getFragments();
-        for(Fragment fragment : fragmentList){
-            if(fragment instanceof HsFragment){
-                HsFragment hsFragment = (HsFragment) fragment;
-                boolean isOnBackPressed = hsFragment.onBackPressed();
-                if(isAllowBackPressed){
-                    isAllowBackPressed = isOnBackPressed;
+        if(fragmentManager != null){
+            List<Fragment> fragmentList = fragmentManager.getFragments();
+            if(fragmentList != null){
+                for(Fragment fragment : fragmentList){
+                    if(fragment != null && fragment instanceof HsFragment){
+                        HsFragment hsFragment = (HsFragment) fragment;
+                        boolean isOnBackPressed = hsFragment.onBackPressed();
+                        if(isAllowBackPressed){
+                            isAllowBackPressed = isOnBackPressed;
+                        }
+                    }
                 }
             }
         }
