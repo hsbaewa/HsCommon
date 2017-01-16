@@ -483,4 +483,13 @@ public abstract class HsFragment extends Fragment implements HsUIConstant, HsHan
         bundle.putInt(TOAST_DURATION, duration);
         sendMessage(HD_SHOW_TOAST, bundle);
     }
+
+    /**
+     * backPress 허용하려면 true, backPress 비허용 하려면 false
+     * @return
+     */
+    public boolean onBackPressed(){
+        //기본적으로 true
+        return true;
+    }
 }

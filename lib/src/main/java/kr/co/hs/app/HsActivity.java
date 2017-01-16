@@ -16,6 +16,7 @@ import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
@@ -492,5 +493,27 @@ abstract public class HsActivity extends AppCompatActivity implements HsHandler.
     @Override
     public String getRemoteClassName() {
         return getIntent().getStringExtra(EXTRA_REMOTE_CLASS);
+    }
+
+    @Override
+    public void onBackPressed() {
+        boolean isAllowBackPressed = true;
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        List<Fragment> fragmentList = fragmentManager.getFragments();
+        for(Fragment fragment : fragmentList){
+            if(fragment instanceof HsFragment){
+                HsFragment hsFragment = (HsFragment) fragment;
+                boolean isOnBackPressed = hsFragment.onBackPressed();
+                if(isAllowBackPressed){
+                    isAllowBackPressed = isOnBackPressed;
+                }
+            }
+        }
+        if(isAllowBackPressed)
+            super.onBackPressed();
+    }
+
+    public final void  onBackPressedForce(){
+        super.onBackPressed();
     }
 }
