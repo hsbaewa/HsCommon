@@ -45,10 +45,16 @@ abstract public class HsActivity extends AppCompatActivity implements HsHandler.
     //BroadcastReceiver 등록되있는건지 확인 가능한 구조 만들자
     private final ArrayList<HsBroadcastReceiver> mBroadcastReceiverList = new ArrayList<>();
 
+    //Activity 상태 이벤트 리스너
+    private OnActivityLifeCycleListener mOnActivityLifeCycleListener = null;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mHandler = new HsHandler(this);
+
+        if(this.mOnActivityLifeCycleListener != null)
+            this.mOnActivityLifeCycleListener.onActivityCreateStatus();
     }
 
     public HsHandler getHandler() {
@@ -519,5 +525,48 @@ abstract public class HsActivity extends AppCompatActivity implements HsHandler.
 
     public final void  onBackPressedForce(){
         super.onBackPressed();
+    }
+
+    public void setOnActivityLifeCycleListener(OnActivityLifeCycleListener onActivityLifeCycleListener) {
+        mOnActivityLifeCycleListener = onActivityLifeCycleListener;
+    }
+
+    public OnActivityLifeCycleListener getOnActivityLifeCycleListener() {
+        return mOnActivityLifeCycleListener;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(this.mOnActivityLifeCycleListener != null)
+            this.mOnActivityLifeCycleListener.onActivityResumeStatus();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if(this.mOnActivityLifeCycleListener != null)
+            this.mOnActivityLifeCycleListener.onActivityPauseStatus();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if(this.mOnActivityLifeCycleListener != null)
+            this.mOnActivityLifeCycleListener.onActivityStartStatus();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if(this.mOnActivityLifeCycleListener != null)
+            this.mOnActivityLifeCycleListener.onActivityStopStatus();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(this.mOnActivityLifeCycleListener != null)
+            this.mOnActivityLifeCycleListener.onActivityDestryStatus();
     }
 }
