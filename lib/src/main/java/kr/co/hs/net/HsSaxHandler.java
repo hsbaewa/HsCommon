@@ -8,6 +8,7 @@ import org.xml.sax.helpers.DefaultHandler;
  * Created by Bae on 2017-01-15.
  */
 
+@Deprecated
 public abstract class HsSaxHandler extends DefaultHandler {
 
     private String mCurrentTagName;
