@@ -51,13 +51,17 @@ abstract public class HsActivity extends AppCompatActivity implements HsHandler.
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mHandler = new HsHandler(this);
+
+        if(mHandler == null)
+            mHandler = new HsHandler(this);
 
         if(this.mOnActivityLifeCycleListener != null)
             this.mOnActivityLifeCycleListener.onActivityCreateStatus();
     }
 
     public HsHandler getHandler() {
+        if(mHandler == null)
+            mHandler = new HsHandler(this);
         return mHandler;
     }
 

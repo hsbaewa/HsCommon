@@ -52,6 +52,8 @@ public abstract class HsFragment extends Fragment implements HsUIConstant, HsHan
     private final ArrayList<HsBroadcastReceiver> mBroadcastReceiverList = new ArrayList<>();
 
     public HsHandler getHandler() {
+        if(handler == null)
+            handler = new HsHandler(this);
         return handler;
     }
 
@@ -75,7 +77,8 @@ public abstract class HsFragment extends Fragment implements HsUIConstant, HsHan
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         this.mLayoutInflater = inflater;
         this.container = container;
-        this.handler = new HsHandler(this);
+        if(this.handler == null)
+            this.handler = new HsHandler(this);
         onCreateView(container, savedInstanceState);
         if(contentView == null){
             return super.onCreateView(inflater, container, savedInstanceState);
