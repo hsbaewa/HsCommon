@@ -22,6 +22,7 @@ import javax.crypto.SecretKey;
  * 패키지명 : kr.co.hs.hardware
  */
 
+@Deprecated
 @RequiresApi(api = Build.VERSION_CODES.M)
 public class HsFingerPrintManagerHelper extends FingerprintManager.AuthenticationCallback{
     private Context mContext;
