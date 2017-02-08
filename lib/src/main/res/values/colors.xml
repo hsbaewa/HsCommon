@@ -28,6 +28,36 @@
     <color name="colorPinkA400">#F50057</color>
     <color name="colorPinkA700">#C51162</color>
 
+    <color name="colorPurple050">#F3E5F5</color>
+    <color name="colorPurple100">#E1BEE7</color>
+    <color name="colorPurple200">#CE93D8</color>
+    <color name="colorPurple300">#BA68C8</color>
+    <color name="colorPurple400">#AB47BC</color>
+    <color name="colorPurple500">#9C27B0</color>
+    <color name="colorPurple600">#8E24AA</color>
+    <color name="colorPurple700">#7B1FA2</color>
+    <color name="colorPurple800">#6A1B9A</color>
+    <color name="colorPurple900">#4A148C</color>
+    <color name="colorPurpleA100">#EA80FC</color>
+    <color name="colorPurpleA200">#E040FB</color>
+    <color name="colorPurpleA400">#D500F9</color>
+    <color name="colorPurpleA700">#AA00FF</color>
+
+    <color name="colorDeepPurple050">#EDE7F6</color>
+    <color name="colorDeepPurple100">#D1C4E9</color>
+    <color name="colorDeepPurple200">#B39DDB</color>
+    <color name="colorDeepPurple300">#9575CD</color>
+    <color name="colorDeepPurple400">#7E57C2</color>
+    <color name="colorDeepPurple500">#673AB7</color>
+    <color name="colorDeepPurple600">#5E35B1</color>
+    <color name="colorDeepPurple700">#512DA8</color>
+    <color name="colorDeepPurple800">#4527A0</color>
+    <color name="colorDeepPurple900">#311B92</color>
+    <color name="colorDeepPurpleA100">#B388FF</color>
+    <color name="colorDeepPurpleA200">#7C4DFF</color>
+    <color name="colorDeepPurpleA400">#651FFF</color>
+    <color name="colorDeepPurpleA700">#6200EA</color>
+
     <color name="colorOrange050">#FFF3E0</color>
     <color name="colorOrange100">#FFE0B2</color>
     <color name="colorOrange200">#FFCC80</color>
