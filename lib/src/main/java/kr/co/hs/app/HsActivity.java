@@ -48,8 +48,18 @@ abstract public class HsActivity extends AppCompatActivity implements HsHandler.
     //Activity 상태 이벤트 리스너
     private OnActivityLifeCycleListener mOnActivityLifeCycleListener = null;
 
+    private ActivityStatus mActivityStatus = null;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        //액티비티 상태값 구조체 저장
+        if(mActivityStatus == null){
+            mActivityStatus = new ActivityStatus(getClass().getName(), STATUS_CREATE, hashCode());
+            addActivityStatus(mActivityStatus);
+        }
+        else
+            mActivityStatus.setStatus(STATUS_CREATE);
+
         super.onCreate(savedInstanceState);
 
         if(mHandler == null)
@@ -541,6 +551,16 @@ abstract public class HsActivity extends AppCompatActivity implements HsHandler.
 
     @Override
     protected void onResume() {
+        //액티비티 상태값 구조체 저장
+        if(mActivityStatus == null){
+            mActivityStatus = new ActivityStatus(getClass().getName(), STATUS_RESUME, hashCode());
+            addActivityStatus(mActivityStatus);
+        }
+        else{
+            mActivityStatus.setStatus(STATUS_RESUME);
+            addActivityStatus(mActivityStatus);
+        }
+
         super.onResume();
         if(this.mOnActivityLifeCycleListener != null)
             this.mOnActivityLifeCycleListener.onActivityResumeStatus();
@@ -548,6 +568,15 @@ abstract public class HsActivity extends AppCompatActivity implements HsHandler.
 
     @Override
     protected void onPause() {
+        //액티비티 상태값 구조체 저장
+        if(mActivityStatus == null){
+            mActivityStatus = new ActivityStatus(getClass().getName(), STATUS_PAUSE, hashCode());
+            addActivityStatus(mActivityStatus);
+        }
+        else{
+            mActivityStatus.setStatus(STATUS_PAUSE);
+        }
+
         super.onPause();
         if(this.mOnActivityLifeCycleListener != null)
             this.mOnActivityLifeCycleListener.onActivityPauseStatus();
@@ -555,6 +584,15 @@ abstract public class HsActivity extends AppCompatActivity implements HsHandler.
 
     @Override
     protected void onStart() {
+        //액티비티 상태값 구조체 저장
+        if(mActivityStatus == null){
+            mActivityStatus = new ActivityStatus(getClass().getName(), STATUS_START,hashCode());
+            addActivityStatus(mActivityStatus);
+        }
+        else{
+            mActivityStatus.setStatus(STATUS_START);
+        }
+
         super.onStart();
         if(this.mOnActivityLifeCycleListener != null)
             this.mOnActivityLifeCycleListener.onActivityStartStatus();
@@ -562,6 +600,13 @@ abstract public class HsActivity extends AppCompatActivity implements HsHandler.
 
     @Override
     protected void onStop() {
+        //액티비티 상태값 구조체 저장
+        if(mActivityStatus == null){
+            mActivityStatus = new ActivityStatus(getClass().getName(), STATUS_STOP, hashCode());
+        }
+        else
+            mActivityStatus.setStatus(STATUS_STOP);
+
         super.onStop();
         if(this.mOnActivityLifeCycleListener != null)
             this.mOnActivityLifeCycleListener.onActivityStopStatus();
@@ -569,8 +614,106 @@ abstract public class HsActivity extends AppCompatActivity implements HsHandler.
 
     @Override
     protected void onDestroy() {
+        //액티비티 상태값 구조체 저장
+        if(mActivityStatus == null){
+            mActivityStatus = new ActivityStatus(getClass().getName(), STATUS_DESTROY, hashCode());
+            addActivityStatus(mActivityStatus);
+        }
+        else{
+            mActivityStatus.setStatus(STATUS_DESTROY);
+            removeActivityStatus(mActivityStatus);
+        }
+
         super.onDestroy();
         if(this.mOnActivityLifeCycleListener != null)
             this.mOnActivityLifeCycleListener.onActivityDestryStatus();
+    }
+
+    @Override
+    public ActivityStatus getActivityStatus() {
+        return mActivityStatus;
+    }
+
+    @Override
+    public ArrayList<ActivityStatus> getActivityStatusList() {
+        HsApplication application = getHsApplication();
+        if(application != null)
+            return application.getActivityStatusList();
+        return null;
+    }
+
+    @Override
+    public int addActivityStatus(ActivityStatus status) {
+        HsApplication application = getHsApplication();
+        if(application != null)
+            return application.addActivityStatus(status);
+        return 0;
+    }
+
+    @Override
+    public int removeActivityStatus(ActivityStatus status) {
+        HsApplication application = getHsApplication();
+        if(application != null)
+            return application.removeActivityStatus(status);
+        return 0;
+    }
+
+    @Override
+    public String getTopActivity() {
+        HsApplication application = getHsApplication();
+        if(application != null)
+            return application.getTopActivity();
+        return null;
+    }
+
+    public static class ActivityStatus{
+        private int mStatus;
+        private final int mHashCode;
+        private final String mClassName;
+
+        public ActivityStatus(String className, int status, int hashCode) {
+            mClassName = className;
+            mStatus = status;
+            this.mHashCode = hashCode;
+        }
+
+        public int getStatus() {
+            return mStatus;
+        }
+
+        public void setStatus(int status) {
+            mStatus = status;
+        }
+
+        public String getClassName() {
+            return mClassName;
+        }
+
+        public int getHashCode() {
+            return mHashCode;
+        }
+
+        @Override
+        public String toString() {
+            return getClassName();
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if(obj instanceof ActivityStatus){
+                if(getHashCode() == ((ActivityStatus) obj).getHashCode())
+                    return true;
+                else
+                    return false;
+            }
+            else if(obj instanceof String){
+                String paramClsName = (String) obj;
+                if(getClassName() != null && getClassName().equals(paramClsName))
+                    return true;
+                else
+                    return false;
+            }
+            return super.equals(obj);
+        }
     }
 }

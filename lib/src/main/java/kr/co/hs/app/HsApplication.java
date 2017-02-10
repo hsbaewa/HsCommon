@@ -12,6 +12,7 @@ import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.telephony.TelephonyManager;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import kr.co.hs.content.HsPreferences;
@@ -24,6 +25,8 @@ public abstract class HsApplication extends Application implements IHsApplicatio
     private static final String PREFERENCE_KEY_DEVICE_ID = "HsDeviceID";
 
     private HsPreferences mPreference;
+
+    private final ArrayList<HsActivity.ActivityStatus> mActivityStatusList = new ArrayList<>();
 
     @Override
     public void onCreate() {
@@ -140,5 +143,43 @@ public abstract class HsApplication extends Application implements IHsApplicatio
     @Override
     public boolean sendPendingBroadcast(Intent intent) {
         return sendPendingBroadcast(0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+    }
+
+    @Override
+    public ArrayList<HsActivity.ActivityStatus> getActivityStatusList() {
+        ArrayList<HsActivity.ActivityStatus> result = new ArrayList<>();
+        result.addAll(mActivityStatusList);
+        return result;
+    }
+
+    @Override
+    public String getTopActivity() {
+        ArrayList<HsActivity.ActivityStatus> list = getActivityStatusList();
+        if(list != null && list.size()>0)
+            return list.get(0).getClassName();
+        return null;
+    }
+
+    public int addActivityStatus(HsActivity.ActivityStatus status) {
+        synchronized (mActivityStatusList){
+            int existIdx = mActivityStatusList.indexOf(status);
+            if(existIdx >= 0){
+                mActivityStatusList.remove(existIdx);
+                mActivityStatusList.add(0, status);
+            }else{
+                mActivityStatusList.add(0, status);
+            }
+        }
+        return 0;
+    }
+
+    public int removeActivityStatus(HsActivity.ActivityStatus status) {
+        synchronized (mActivityStatusList){
+            int existIdx = mActivityStatusList.indexOf(status);
+            if(existIdx >= 0){
+                mActivityStatusList.remove(existIdx);
+            }
+        }
+        return 0;
     }
 }

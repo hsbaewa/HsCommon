@@ -1,5 +1,6 @@
 package kr.co.hs.common.sample;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -10,14 +11,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 import kr.co.hs.app.HsActivity;
-import kr.co.hs.common.sample.R;
+import kr.co.hs.util.Logger;
 import kr.co.hs.widget.HsFloatingActionButton;
 
 /**
  * Created by Bae on 2016-12-29.
  */
-public class SampleActivity extends HsActivity {
+public class SampleActivity extends HsActivity implements View.OnClickListener{
 
     RecyclerView mRecyclerView;
     HsFloatingActionButton mFloatingActionButton;
@@ -36,12 +39,23 @@ public class SampleActivity extends HsActivity {
 
         mFloatingActionButton = (HsFloatingActionButton) findViewById(R.id.FloatingActionButton);
         mFloatingActionButton.setBehavior(new HsFloatingActionButton.ScrollAwareFABBehavior());
+        mFloatingActionButton.setOnClickListener(this);
 
         mRecyclerView.setAdapter(mRecyclerAdapter);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        ArrayList<ActivityStatus> list = getActivityStatusList();
+        Logger.d("a");
+    }
 
-
+    @Override
+    public void onClick(View v) {
+        Intent intent = new Intent(getContext(), SecondActivity.class);
+        startActivity(intent);
+    }
 
 
     class RecyclerAdapter extends RecyclerView.Adapter<Holder>{

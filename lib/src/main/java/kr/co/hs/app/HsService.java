@@ -172,4 +172,20 @@ public abstract class HsService extends Service implements IHsService, IHsPackag
         intent.putExtra(EXTRA_REMOTE_CLASS, getClass().getName());
         super.startActivity(intent, options);
     }
+
+    @Override
+    public ArrayList<HsActivity.ActivityStatus> getActivityStatusList() {
+        HsApplication application = getHsApplication();
+        if(application != null)
+            return application.getActivityStatusList();
+        return null;
+    }
+
+    @Override
+    public String getTopActivity() {
+        HsApplication application = getHsApplication();
+        if(application != null)
+            return application.getTopActivity();
+        return null;
+    }
 }

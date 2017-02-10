@@ -2,6 +2,8 @@ package kr.co.hs.app;
 
 import android.content.Intent;
 
+import java.util.ArrayList;
+
 import kr.co.hs.content.HsPreferences;
 
 /**
@@ -15,6 +17,8 @@ public interface IHsComponent extends IHs{
 
     HsPreferences getDefaultPreference();
     String getDeviceId();
+    ArrayList<HsActivity.ActivityStatus> getActivityStatusList();
+    String getTopActivity();
 
     boolean sendPendingBroadcast(int requestCode, Intent intent, int flags);
     boolean sendPendingBroadcast(int requestCode, Intent intent);

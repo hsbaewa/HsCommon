@@ -1,7 +1,6 @@
 package kr.co.hs.app;
 
 import android.app.IntentService;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -182,5 +181,21 @@ public abstract class HsIntentService extends IntentService implements IHsServic
     public void startActivity(Intent intent, Bundle options) {
         intent.putExtra(EXTRA_REMOTE_CLASS, getClass().getName());
         super.startActivity(intent, options);
+    }
+
+    @Override
+    public ArrayList<HsActivity.ActivityStatus> getActivityStatusList() {
+        HsApplication application = getHsApplication();
+        if(application != null)
+            return application.getActivityStatusList();
+        return null;
+    }
+
+    @Override
+    public String getTopActivity() {
+        HsApplication application = getHsApplication();
+        if(application != null)
+            return application.getTopActivity();
+        return null;
     }
 }
