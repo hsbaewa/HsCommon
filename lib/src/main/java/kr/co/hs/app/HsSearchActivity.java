@@ -24,7 +24,7 @@ public abstract class HsSearchActivity extends HsActivity implements SearchView.
     protected abstract String getSearchViewHint();
 
     @Override
-    public boolean onQueryTextChange(String newText) {
+    public boolean onQueryTextSubmit(String query) {
         searchViewAndroidActionBar.clearFocus();
         return true;
     }
