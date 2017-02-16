@@ -1,5 +1,6 @@
 package kr.co.hs.app;
 
+import android.app.ActivityManager;
 import android.app.Application;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -181,5 +182,28 @@ public abstract class HsApplication extends Application implements IHsApplicatio
             }
         }
         return 0;
+    }
+
+    @Override
+    public boolean isRunningService(Class<?> service) {
+        ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+        List<ActivityManager.RunningServiceInfo> serviceInfos = manager.getRunningServices(Integer.MAX_VALUE);
+        for (ActivityManager.RunningServiceInfo serviceInfo : serviceInfos) {
+            if(serviceInfo.service.getClassName().equals(service.getName())){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public List<String> getRunningServiceClassName() {
+        List<String> result = new ArrayList<>();
+        ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+        List<ActivityManager.RunningServiceInfo> serviceInfos = manager.getRunningServices(Integer.MAX_VALUE);
+        for (ActivityManager.RunningServiceInfo service : serviceInfos) {
+            result.add(service.service.getClassName());
+        }
+        return result;
     }
 }

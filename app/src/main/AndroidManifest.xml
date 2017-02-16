@@ -25,6 +25,8 @@
             android:launchMode="singleInstance"
             />
 
+        <service android:name=".SampleService"/>
+
     </application>
 
 </manifest>

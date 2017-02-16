@@ -170,7 +170,12 @@ abstract public class HsActivity extends AppCompatActivity implements HsHandler.
                 Bundle data = msg.getData();
                 String message = data.getString(TOAST_MESSAGE);
                 int duration = data.getInt(TOAST_DURATION, Toast.LENGTH_SHORT);
-                Toast.makeText(getContext(), message, duration).show();
+                if(duration == Toast.LENGTH_LONG)
+                    Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
+                else if(duration == Toast.LENGTH_SHORT)
+                    Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+                else
+                    Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
                 return true;
             }
         }
@@ -664,6 +669,22 @@ abstract public class HsActivity extends AppCompatActivity implements HsHandler.
         if(application != null)
             return application.getTopActivity();
         return null;
+    }
+
+    @Override
+    public List<String> getRunningServiceClassName() {
+        HsApplication application = getHsApplication();
+        if(application != null)
+            return application.getRunningServiceClassName();
+        return null;
+    }
+
+    @Override
+    public boolean isRunningService(Class<?> service) {
+        HsApplication application = getHsApplication();
+        if(application != null)
+            return application.isRunningService(service);
+        return false;
     }
 
     public static class ActivityStatus{

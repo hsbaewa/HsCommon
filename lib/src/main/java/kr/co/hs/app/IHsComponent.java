@@ -3,6 +3,7 @@ package kr.co.hs.app;
 import android.content.Intent;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import kr.co.hs.content.HsPreferences;
 
@@ -23,4 +24,7 @@ public interface IHsComponent extends IHs{
     boolean sendPendingBroadcast(int requestCode, Intent intent, int flags);
     boolean sendPendingBroadcast(int requestCode, Intent intent);
     boolean sendPendingBroadcast(Intent intent);
+
+    List<String> getRunningServiceClassName();
+    boolean isRunningService(Class<?> service);
 }

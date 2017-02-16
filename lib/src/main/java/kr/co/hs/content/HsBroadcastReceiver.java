@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import kr.co.hs.app.HsActivity;
 import kr.co.hs.app.HsApplication;
@@ -115,6 +116,22 @@ public abstract class HsBroadcastReceiver extends BroadcastReceiver implements I
         if(application != null)
             return application.getTopActivity();
         return null;
+    }
+
+    @Override
+    public List<String> getRunningServiceClassName() {
+        HsApplication application = getHsApplication();
+        if(application != null)
+            return application.getRunningServiceClassName();
+        return null;
+    }
+
+    @Override
+    public boolean isRunningService(Class<?> service) {
+        HsApplication application = getHsApplication();
+        if(application != null)
+            return application.isRunningService(service);
+        return false;
     }
 
     public abstract void onActionReceive(Context context, String action, Intent intent);

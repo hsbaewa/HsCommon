@@ -198,4 +198,20 @@ public abstract class HsIntentService extends IntentService implements IHsServic
             return application.getTopActivity();
         return null;
     }
+
+    @Override
+    public List<String> getRunningServiceClassName() {
+        HsApplication application = getHsApplication();
+        if(application != null)
+            return application.getRunningServiceClassName();
+        return null;
+    }
+
+    @Override
+    public boolean isRunningService(Class<?> service) {
+        HsApplication application = getHsApplication();
+        if(application != null)
+            return application.isRunningService(service);
+        return false;
+    }
 }

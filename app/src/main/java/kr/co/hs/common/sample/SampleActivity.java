@@ -42,6 +42,20 @@ public class SampleActivity extends HsActivity implements View.OnClickListener{
         mFloatingActionButton.setOnClickListener(this);
 
         mRecyclerView.setAdapter(mRecyclerAdapter);
+
+
+        Intent serIntent = new Intent(getContext(), SampleService.class);
+        startService(serIntent);
+
+        boolean isrunning = isRunningService(SampleService.class);
+
+//        if(!isrunning){
+//            Intent serIntent = new Intent(getContext(), SampleService.class);
+//            startService(serIntent);
+//        }
+
+//        isrunning = isRunningService(SampleService.class);
+//        Logger.d("a");
     }
 
     @Override
@@ -53,8 +67,10 @@ public class SampleActivity extends HsActivity implements View.OnClickListener{
 
     @Override
     public void onClick(View v) {
-        Intent intent = new Intent(getContext(), SecondActivity.class);
-        startActivity(intent);
+//        Intent intent = new Intent(getContext(), SecondActivity.class);
+//        startActivity(intent);
+        boolean isrunning = isRunningService(SampleService.class);
+        Logger.d("a");
     }
 
 
