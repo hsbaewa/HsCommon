@@ -1,6 +1,5 @@
 package kr.co.hs.app;
 
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.SearchView;
 import android.view.Menu;
