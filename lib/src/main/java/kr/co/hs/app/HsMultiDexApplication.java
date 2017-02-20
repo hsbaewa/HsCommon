@@ -1,7 +1,6 @@
 package kr.co.hs.app;
 
 import android.app.ActivityManager;
-import android.app.Application;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
@@ -11,6 +10,7 @@ import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
+import android.support.multidex.MultiDexApplication;
 import android.telephony.TelephonyManager;
 
 import java.util.ArrayList;
@@ -19,9 +19,12 @@ import java.util.List;
 import kr.co.hs.content.HsPreferences;
 
 /**
- * Created by Bae on 2016-12-23.
+ * 생성된 시간 2017-02-20, Bae 에 의해 생성됨
+ * 프로젝트 이름 : HsCommon
+ * 패키지명 : kr.co.hs.app
  */
-public abstract class HsApplication extends Application implements IHsApplication, IHsPackageManager{
+
+public class HsMultiDexApplication extends MultiDexApplication implements IHsApplication, IHsPackageManager{
     private HsPreferences mPreference;
     private final ArrayList<HsActivity.ActivityStatus> mActivityStatusList = new ArrayList<>();
 
@@ -31,7 +34,6 @@ public abstract class HsApplication extends Application implements IHsApplicatio
         //default 프리퍼런스 초기화
         mPreference = new HsPreferences(PreferenceManager.getDefaultSharedPreferences(this));
     }
-
 
     @Override
     public HsPreferences getDefaultPreference() {

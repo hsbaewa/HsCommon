@@ -6,9 +6,10 @@ import android.content.Context;
 import android.content.Intent;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import kr.co.hs.app.HsActivity;
-import kr.co.hs.app.HsApplication;
+import kr.co.hs.app.IHsApplication;
 
 /**
  * Created by Bae on 2016-12-06.
@@ -57,13 +58,18 @@ public abstract class HsBroadcastReceiver extends BroadcastReceiver implements I
         return mContext;
     }
 
-    public HsApplication getHsApplication(){
-        return (HsApplication) getContext().getApplicationContext();
+    public Context getApplicationContext(){
+        return getContext().getApplicationContext();
+    }
+
+    public IHsApplication getHsApplication(){
+        IHsApplication application = (IHsApplication) getApplicationContext();
+        return application;
     }
 
     @Override
     public HsPreferences getDefaultPreference() {
-        HsApplication application = getHsApplication();
+        IHsApplication application = getHsApplication();
         if(application != null)
             return application.getDefaultPreference();
         return null;
@@ -71,7 +77,7 @@ public abstract class HsBroadcastReceiver extends BroadcastReceiver implements I
 
     @Override
     public String getDeviceId() {
-        HsApplication application = getHsApplication();
+        IHsApplication application = getHsApplication();
         if(application != null)
             return application.getDeviceId();
         return null;
@@ -79,7 +85,7 @@ public abstract class HsBroadcastReceiver extends BroadcastReceiver implements I
 
     @Override
     public ArrayList<HsActivity.ActivityStatus> getActivityStatusList() {
-        HsApplication application = getHsApplication();
+        IHsApplication application = getHsApplication();
         if(application != null)
             return application.getActivityStatusList();
         return null;
@@ -87,7 +93,7 @@ public abstract class HsBroadcastReceiver extends BroadcastReceiver implements I
 
     @Override
     public boolean sendPendingBroadcast(int requestCode, Intent intent, int flags) {
-        HsApplication application = getHsApplication();
+        IHsApplication application = getHsApplication();
         if(application != null)
             return application.sendPendingBroadcast(requestCode, intent, flags);
         return false;
@@ -95,7 +101,7 @@ public abstract class HsBroadcastReceiver extends BroadcastReceiver implements I
 
     @Override
     public boolean sendPendingBroadcast(int requestCode, Intent intent) {
-        HsApplication application = getHsApplication();
+        IHsApplication application = getHsApplication();
         if(application != null)
             return application.sendPendingBroadcast(requestCode, intent);
         return false;
@@ -103,7 +109,7 @@ public abstract class HsBroadcastReceiver extends BroadcastReceiver implements I
 
     @Override
     public boolean sendPendingBroadcast(Intent intent) {
-        HsApplication application = getHsApplication();
+        IHsApplication application = getHsApplication();
         if(application != null)
             return application.sendPendingBroadcast(intent);
         return false;
@@ -111,10 +117,26 @@ public abstract class HsBroadcastReceiver extends BroadcastReceiver implements I
 
     @Override
     public String getTopActivity() {
-        HsApplication application = getHsApplication();
+        IHsApplication application = getHsApplication();
         if(application != null)
             return application.getTopActivity();
         return null;
+    }
+
+    @Override
+    public List<String> getRunningServiceClassName() {
+        IHsApplication application = getHsApplication();
+        if(application != null)
+            return application.getRunningServiceClassName();
+        return null;
+    }
+
+    @Override
+    public boolean isRunningService(Class<?> service) {
+        IHsApplication application = getHsApplication();
+        if(application != null)
+            return application.isRunningService(service);
+        return false;
     }
 
     public abstract void onActionReceive(Context context, String action, Intent intent);

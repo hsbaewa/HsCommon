@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -176,7 +177,13 @@ public abstract class HsFragment extends Fragment implements HsUIConstant, HsHan
                 Bundle data = msg.getData();
                 String message = data.getString(TOAST_MESSAGE);
                 int duration = data.getInt(TOAST_DURATION, Toast.LENGTH_SHORT);
-                Toast.makeText(getContext(), message, duration).show();
+                if(duration == Toast.LENGTH_LONG)
+                    Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
+                else if(duration == Toast.LENGTH_SHORT)
+                    Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+                else
+                    Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+
                 return true;
             }
         }
@@ -362,9 +369,18 @@ public abstract class HsFragment extends Fragment implements HsUIConstant, HsHan
             return null;
     }
 
-    public HsApplication getHsApplication() {
-        HsApplication application = (HsApplication) getContext().getApplicationContext();
+    public Context getApplicationContext(){
+        return getContext().getApplicationContext();
+    }
+
+    public IHsApplication getHsApplication() {
+        IHsApplication application = (IHsApplication) getApplicationContext();
         return application;
+    }
+
+    public IHsPackageManager getHsPackageManager(){
+        IHsPackageManager packageManager = (IHsPackageManager) getApplicationContext();
+        return packageManager;
     }
 
     @Override
@@ -408,32 +424,32 @@ public abstract class HsFragment extends Fragment implements HsUIConstant, HsHan
 
     @Override
     public ApplicationInfo getApplicationInfo(String packageName, int flags) throws PackageManager.NameNotFoundException {
-        return getHsApplication().getApplicationInfo(packageName, flags);
+        return getHsPackageManager().getApplicationInfo(packageName, flags);
     }
 
     @Override
     public Drawable loadIcon(String packageName) throws PackageManager.NameNotFoundException {
-        return getHsApplication().loadIcon(packageName);
+        return getHsPackageManager().loadIcon(packageName);
     }
 
     @Override
     public CharSequence loadLabel(String packageName) throws PackageManager.NameNotFoundException {
-        return getHsApplication().loadLabel(packageName);
+        return getHsPackageManager().loadLabel(packageName);
     }
 
     @Override
     public PackageInfo getPackageInfo(String packageName, int flags) throws PackageManager.NameNotFoundException {
-        return getHsApplication().getPackageInfo(packageName, flags);
+        return getHsPackageManager().getPackageInfo(packageName, flags);
     }
 
     @Override
     public List<ApplicationInfo> getInstalledApplications(int flags) {
-        return getHsApplication().getInstalledApplications(flags);
+        return getHsPackageManager().getInstalledApplications(flags);
     }
 
     @Override
     public List<PackageInfo> getInstalledPackages(int flags) {
-        return getHsApplication().getInstalledPackages(flags);
+        return getHsPackageManager().getInstalledPackages(flags);
     }
 
     @Override

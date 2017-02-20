@@ -54,9 +54,14 @@ public abstract class HsIntentService extends IntentService implements IHsServic
         return this;
     }
 
-    public HsApplication getHsApplication() {
-        HsApplication application = (HsApplication) getApplicationContext();
+    public IHsApplication getHsApplication() {
+        IHsApplication application = (IHsApplication) getApplicationContext();
         return application;
+    }
+
+    public IHsPackageManager getHsPackageManager(){
+        IHsPackageManager packageManager = (IHsPackageManager) getApplicationContext();
+        return packageManager;
     }
 
     @Override
@@ -87,32 +92,32 @@ public abstract class HsIntentService extends IntentService implements IHsServic
 
     @Override
     public ApplicationInfo getApplicationInfo(String packageName, int flags) throws PackageManager.NameNotFoundException {
-        return getHsApplication().getApplicationInfo(packageName, flags);
+        return getHsPackageManager().getApplicationInfo(packageName, flags);
     }
 
     @Override
     public Drawable loadIcon(String packageName) throws PackageManager.NameNotFoundException {
-        return getHsApplication().loadIcon(packageName);
+        return getHsPackageManager().loadIcon(packageName);
     }
 
     @Override
     public CharSequence loadLabel(String packageName) throws PackageManager.NameNotFoundException {
-        return getHsApplication().loadLabel(packageName);
+        return getHsPackageManager().loadLabel(packageName);
     }
 
     @Override
     public PackageInfo getPackageInfo(String packageName, int flags) throws PackageManager.NameNotFoundException {
-        return getHsApplication().getPackageInfo(packageName, flags);
+        return getHsPackageManager().getPackageInfo(packageName, flags);
     }
 
     @Override
     public List<ApplicationInfo> getInstalledApplications(int flags) {
-        return getHsApplication().getInstalledApplications(flags);
+        return getHsPackageManager().getInstalledApplications(flags);
     }
 
     @Override
     public List<PackageInfo> getInstalledPackages(int flags) {
-        return getHsApplication().getInstalledPackages(flags);
+        return getHsPackageManager().getInstalledPackages(flags);
     }
 
     @Override
@@ -141,15 +146,15 @@ public abstract class HsIntentService extends IntentService implements IHsServic
 
     @Override
     public boolean sendPendingBroadcast(int requestCode, Intent intent, int flags){
-        HsApplication application = getHsApplication();
-        if(application != null){
+        IHsApplication application = getHsApplication();
+        if(application != null)
             return application.sendPendingBroadcast(requestCode, intent, flags);
-        }else
+        else
             return false;
     }
     @Override
     public boolean sendPendingBroadcast(int requestCode, Intent intent){
-        HsApplication application = getHsApplication();
+        IHsApplication application = getHsApplication();
         if(application != null){
             return application.sendPendingBroadcast(requestCode, intent);
         }else{
@@ -159,7 +164,7 @@ public abstract class HsIntentService extends IntentService implements IHsServic
 
     @Override
     public boolean sendPendingBroadcast(Intent intent) {
-        HsApplication application = getHsApplication();
+        IHsApplication application = getHsApplication();
         if(application != null){
             return application.sendPendingBroadcast(intent);
         }else{
@@ -185,7 +190,7 @@ public abstract class HsIntentService extends IntentService implements IHsServic
 
     @Override
     public ArrayList<HsActivity.ActivityStatus> getActivityStatusList() {
-        HsApplication application = getHsApplication();
+        IHsApplication application = getHsApplication();
         if(application != null)
             return application.getActivityStatusList();
         return null;
@@ -193,9 +198,25 @@ public abstract class HsIntentService extends IntentService implements IHsServic
 
     @Override
     public String getTopActivity() {
-        HsApplication application = getHsApplication();
+        IHsApplication application = getHsApplication();
         if(application != null)
             return application.getTopActivity();
         return null;
+    }
+
+    @Override
+    public List<String> getRunningServiceClassName() {
+        IHsApplication application = getHsApplication();
+        if(application != null)
+            return application.getRunningServiceClassName();
+        return null;
+    }
+
+    @Override
+    public boolean isRunningService(Class<?> service) {
+        IHsApplication application = getHsApplication();
+        if(application != null)
+            return application.isRunningService(service);
+        return false;
     }
 }

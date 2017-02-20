@@ -1,6 +1,6 @@
 package kr.co.hs.common.sample;
 
-import kr.co.hs.app.HsApplication;
+import kr.co.hs.app.HsMultiDexApplication;
 
 /**
  * 생성된 시간 2017-02-10, Bae 에 의해 생성됨
@@ -8,5 +8,5 @@ import kr.co.hs.app.HsApplication;
  * 패키지명 : kr.co.hs.common.sample
  */
 
-public class SampleApplication extends HsApplication {
+public class SampleApplication extends HsMultiDexApplication {
 }

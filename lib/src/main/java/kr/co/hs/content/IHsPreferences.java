@@ -6,6 +6,7 @@ import java.util.Set;
 /**
  * Created by Bae on 2016-11-24.
  */
+@Deprecated
 public interface IHsPreferences {
     void set(String key, String value);
     void set(String key, int value);

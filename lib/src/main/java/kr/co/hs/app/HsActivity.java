@@ -11,10 +11,12 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
@@ -170,7 +172,12 @@ abstract public class HsActivity extends AppCompatActivity implements HsHandler.
                 Bundle data = msg.getData();
                 String message = data.getString(TOAST_MESSAGE);
                 int duration = data.getInt(TOAST_DURATION, Toast.LENGTH_SHORT);
-                Toast.makeText(getContext(), message, duration).show();
+                if(duration == Toast.LENGTH_LONG)
+                    Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
+                else if(duration == Toast.LENGTH_SHORT)
+                    Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+                else
+                    Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
                 return true;
             }
         }
@@ -361,9 +368,14 @@ abstract public class HsActivity extends AppCompatActivity implements HsHandler.
         }
     }
 
-    public HsApplication getHsApplication() {
-        HsApplication application = (HsApplication) getApplicationContext();
+    public IHsApplication getHsApplication() {
+        IHsApplication application = (IHsApplication) getApplicationContext();
         return application;
+    }
+
+    public IHsPackageManager getHsPackageManager(){
+        IHsPackageManager packageManager = (IHsPackageManager) getApplicationContext();
+        return packageManager;
     }
 
     @Override
@@ -394,32 +406,32 @@ abstract public class HsActivity extends AppCompatActivity implements HsHandler.
 
     @Override
     public ApplicationInfo getApplicationInfo(String packageName, int flags) throws PackageManager.NameNotFoundException {
-        return getHsApplication().getApplicationInfo(packageName, flags);
+        return getHsPackageManager().getApplicationInfo(packageName, flags);
     }
 
     @Override
     public Drawable loadIcon(String packageName) throws PackageManager.NameNotFoundException {
-        return getHsApplication().loadIcon(packageName);
+        return getHsPackageManager().loadIcon(packageName);
     }
 
     @Override
     public CharSequence loadLabel(String packageName) throws PackageManager.NameNotFoundException {
-        return getHsApplication().loadLabel(packageName);
+        return getHsPackageManager().loadLabel(packageName);
     }
 
     @Override
     public PackageInfo getPackageInfo(String packageName, int flags) throws PackageManager.NameNotFoundException {
-        return getHsApplication().getPackageInfo(packageName, flags);
+        return getHsPackageManager().getPackageInfo(packageName, flags);
     }
 
     @Override
     public List<ApplicationInfo> getInstalledApplications(int flags) {
-        return getHsApplication().getInstalledApplications(flags);
+        return getHsPackageManager().getInstalledApplications(flags);
     }
 
     @Override
     public List<PackageInfo> getInstalledPackages(int flags) {
-        return getHsApplication().getInstalledPackages(flags);
+        return getHsPackageManager().getInstalledPackages(flags);
     }
 
     @Override
@@ -448,7 +460,7 @@ abstract public class HsActivity extends AppCompatActivity implements HsHandler.
 
     @Override
     public boolean sendPendingBroadcast(int requestCode, Intent intent, int flags){
-        HsApplication application = getHsApplication();
+        IHsApplication application = getHsApplication();
         if(application != null){
             return application.sendPendingBroadcast(requestCode, intent, flags);
         }else
@@ -456,7 +468,7 @@ abstract public class HsActivity extends AppCompatActivity implements HsHandler.
     }
     @Override
     public boolean sendPendingBroadcast(int requestCode, Intent intent){
-        HsApplication application = getHsApplication();
+        IHsApplication application = getHsApplication();
         if(application != null){
             return application.sendPendingBroadcast(requestCode, intent);
         }else{
@@ -466,7 +478,7 @@ abstract public class HsActivity extends AppCompatActivity implements HsHandler.
 
     @Override
     public boolean sendPendingBroadcast(Intent intent) {
-        HsApplication application = getHsApplication();
+        IHsApplication application = getHsApplication();
         if(application != null){
             return application.sendPendingBroadcast(intent);
         }else{
@@ -505,6 +517,7 @@ abstract public class HsActivity extends AppCompatActivity implements HsHandler.
     }
 
     @Override
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     public void startActivityForResult(Intent intent, int requestCode, @Nullable Bundle options) {
         intent.putExtra(EXTRA_REMOTE_CLASS, getClass().getName());
         super.startActivityForResult(intent, requestCode, options);
@@ -636,7 +649,7 @@ abstract public class HsActivity extends AppCompatActivity implements HsHandler.
 
     @Override
     public ArrayList<ActivityStatus> getActivityStatusList() {
-        HsApplication application = getHsApplication();
+        IHsApplication application = getHsApplication();
         if(application != null)
             return application.getActivityStatusList();
         return null;
@@ -644,26 +657,55 @@ abstract public class HsActivity extends AppCompatActivity implements HsHandler.
 
     @Override
     public int addActivityStatus(ActivityStatus status) {
-        HsApplication application = getHsApplication();
-        if(application != null)
-            return application.addActivityStatus(status);
+        IHsApplication application = getHsApplication();
+        if(application != null){
+            if(application instanceof HsApplication){
+                return ((HsApplication) application).addActivityStatus(status);
+            }else if(application instanceof HsMultiDexApplication){
+                return ((HsMultiDexApplication) application).addActivityStatus(status);
+            }else
+                return 0;
+        }
         return 0;
     }
 
     @Override
     public int removeActivityStatus(ActivityStatus status) {
-        HsApplication application = getHsApplication();
-        if(application != null)
-            return application.removeActivityStatus(status);
+        IHsApplication application = getHsApplication();
+        if(application != null){
+            if(application instanceof HsApplication){
+                return ((HsApplication) application).removeActivityStatus(status);
+            }else if(application instanceof HsMultiDexApplication){
+                return ((HsMultiDexApplication) application).removeActivityStatus(status);
+            }else{
+                return 0;
+            }
+        }
         return 0;
     }
 
     @Override
     public String getTopActivity() {
-        HsApplication application = getHsApplication();
+        IHsApplication application = getHsApplication();
         if(application != null)
             return application.getTopActivity();
         return null;
+    }
+
+    @Override
+    public List<String> getRunningServiceClassName() {
+        IHsApplication application = getHsApplication();
+        if(application != null)
+            return application.getRunningServiceClassName();
+        return null;
+    }
+
+    @Override
+    public boolean isRunningService(Class<?> service) {
+        IHsApplication application = getHsApplication();
+        if(application != null)
+            return application.isRunningService(service);
+        return false;
     }
 
     public static class ActivityStatus{
