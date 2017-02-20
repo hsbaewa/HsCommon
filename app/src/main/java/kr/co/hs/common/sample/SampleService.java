@@ -1,10 +1,13 @@
 package kr.co.hs.common.sample;
 
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 
 import kr.co.hs.app.HsIntentService;
 import kr.co.hs.app.HsService;
+import kr.co.hs.content.HsBroadcastReceiver;
 import kr.co.hs.util.Logger;
 
 /**
@@ -39,4 +42,25 @@ public class SampleService extends HsService {
         }
         return START_STICKY;
     }
+
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+
+        IntentFilter filter = new IntentFilter();
+        filter.addAction("action1");
+        filter.addAction("action2");
+        registerReceiver(mReceiver, filter);
+
+    }
+
+    private HsBroadcastReceiver mReceiver = new HsBroadcastReceiver() {
+        @Override
+        public void onActionReceive(Context context, String action, Intent intent) {
+            switch (action){
+
+            }
+        }
+    };
 }
