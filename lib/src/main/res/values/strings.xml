@@ -3,4 +3,10 @@
 
     <string name="common_ok">확인</string>
     <string name="common_cancel">취소</string>
+    
+    <string name="common_fontfamily_sans_serif">sans-serif</string>
+    <string name="common_fontfamily_sans_serif_light">sans-serif-light</string>
+    <string name="common_fontfamily_sans_serif_condensed">sans-serif-condensed</string>
+    <string name="common_fontfamily_sans_serif_thin">sans-serif-thin</string>
+    <string name="common_fontfamily_sans_serif_medium">sans-serif-medium</string>
 </resources>

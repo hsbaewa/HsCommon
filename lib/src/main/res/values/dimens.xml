@@ -10,4 +10,34 @@
     <!-- GENERAL -->
     <dimen name="default_stroke_width">7dp</dimen>
     <dimen name="default_background_stroke_width">3dp</dimen>
+
+    <dimen name="Elevation_2dp">2dp</dimen>
+    <dimen name="Elevation_8dp">8dp</dimen>
+    <dimen name="Elevation_Dialog">24dp</dimen>
+    <dimen name="Elevation_Picker">24dp</dimen>
+    <dimen name="Elevation_Card">2dp</dimen>
+    <dimen name="Elevation_AppBar">4dp</dimen>
+    <dimen name="Elevation_FloatingActionButton">6dp</dimen>
+
+    <dimen name="TypoGraphicScale_8dp">8dp</dimen>
+    <dimen name="TypoGraphicScale_10dp">10dp</dimen>
+    <dimen name="TypoGraphicScale_16dp">16dp</dimen>
+
+    <dimen name="TypoGraphicScale_Display4_112sp">112sp</dimen>
+    <dimen name="TypoGraphicScale_Display3_56sp">56sp</dimen>
+    <dimen name="TypoGraphicScale_Display2_45sp">45sp</dimen>
+    <dimen name="TypoGraphicScale_Display1_34sp">34sp</dimen>
+    <dimen name="TypoGraphicScale_Headline_24sp">24sp</dimen>
+    <dimen name="TypoGraphicScale_Title_20sp">20sp</dimen>
+    <dimen name="TypoGraphicScale_SubHeading_16sp">16sp</dimen>
+    <dimen name="TypoGraphicScale_Body2_14sp">14sp</dimen>
+    <dimen name="TypoGraphicScale_Body1_14sp">14sp</dimen>
+    <dimen name="TypoGraphicScale_Caption_12sp">12sp</dimen>
+    <dimen name="TypoGraphicScale_Button_14sp">14sp</dimen>
+
+    <dimen name="Margin_4dp">4dp</dimen>
+    <dimen name="Margin_8dp">8dp</dimen>
+    <dimen name="Margin_16dp">16dp</dimen>
+    <dimen name="Margin_32dp">32dp</dimen>
+    <dimen name="Margin_64dp">64dp</dimen>
 </resources>
