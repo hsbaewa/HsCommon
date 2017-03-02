@@ -369,8 +369,13 @@ abstract public class HsActivity extends AppCompatActivity implements HsHandler.
     }
 
     public IHsApplication getHsApplication() {
-        IHsApplication application = (IHsApplication) getApplicationContext();
-        return application;
+        try{
+            IHsApplication application = (IHsApplication) getApplicationContext();
+            return application;
+        }catch (ClassCastException e){
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public IHsPackageManager getHsPackageManager(){
