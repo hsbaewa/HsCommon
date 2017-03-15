@@ -1,18 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <declare-styleable name="HsButton">
-        <attr name="shadowEnabled" format="boolean" />
-        <attr name="buttonColor" format="color" />
-        <attr name="shadowColor" format="color" />
-        <attr name="shadowHeight" format="dimension" />
-        <attr name="cornerRadius" format="dimension" />
-    </declare-styleable>
 
-    <declare-styleable name="HsCircularProgressBar">
-        <attr name="cpb_progress" format="integer" />
-        <attr name="cpb_progressbar_color" format="color" />
-        <attr name="cpb_background_progressbar_color" format="color" />
-        <attr name="cpb_progressbar_width" format="dimension" />
-        <attr name="cpb_background_progressbar_width" format="dimension" />
-    </declare-styleable>
 </resources>
