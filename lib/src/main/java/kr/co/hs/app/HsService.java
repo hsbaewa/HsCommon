@@ -209,4 +209,22 @@ public abstract class HsService extends Service implements IHsService, IHsPackag
             return application.isRunningService(service);
         return false;
     }
+
+    @Override
+    public int getColorCompat(int resourceId) {
+        IHsApplication application = getHsApplication();
+        if(application != null)
+            return application.getColorCompat(resourceId);
+        else
+            return 0;
+    }
+
+    @Override
+    public Drawable getDrawableCompat(int resourceId) {
+        IHsApplication application = getHsApplication();
+        if(application != null)
+            return getDrawableCompat(resourceId);
+        else
+            return null;
+    }
 }

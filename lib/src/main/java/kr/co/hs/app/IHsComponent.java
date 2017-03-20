@@ -1,6 +1,7 @@
 package kr.co.hs.app;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,4 +28,8 @@ public interface IHsComponent extends IHs{
 
     List<String> getRunningServiceClassName();
     boolean isRunningService(Class<?> service);
+
+    //리소스 getter 추가
+    int getColorCompat(int resourceId);
+    Drawable getDrawableCompat(int resourceId);
 }

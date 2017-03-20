@@ -515,11 +515,19 @@ public abstract class HsFragment extends Fragment implements HsUIConstant, HsHan
 
     @Override
     public int getColorCompat(int resourceId) {
-        return ContextCompat.getColor(getContext(), resourceId);
+        IHsApplication application = getHsApplication();
+        if(application != null)
+            return application.getColorCompat(resourceId);
+        else
+            return 0;
     }
 
     @Override
     public Drawable getDrawableCompat(int resourceId) {
-        return ContextCompat.getDrawable(getContext(), resourceId);
+        IHsApplication application = getHsApplication();
+        if(application != null)
+            return getDrawableCompat(resourceId);
+        else
+            return null;
     }
 }

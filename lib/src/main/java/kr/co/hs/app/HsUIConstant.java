@@ -56,9 +56,4 @@ public interface HsUIConstant extends HsConstant {
     void sendMessageDelayed(int what, Object obj, long delayMillis);
     void sendMessageDelayed(int what, Bundle data, long delayMillis);
     void sendMessageDelayed(int what, Object obj, Bundle data, long delayMillis);
-
-
-    //리소스 getter 추가
-    int getColorCompat(int resourceId);
-    Drawable getDrawableCompat(int resourceId);
 }

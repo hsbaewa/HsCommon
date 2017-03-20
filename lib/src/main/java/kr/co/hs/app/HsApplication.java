@@ -11,6 +11,7 @@ import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
+import android.support.v4.content.ContextCompat;
 import android.telephony.TelephonyManager;
 
 import java.util.ArrayList;
@@ -207,5 +208,15 @@ public abstract class HsApplication extends Application implements IHsApplicatio
             result.add(service.service.getClassName());
         }
         return result;
+    }
+
+    @Override
+    public int getColorCompat(int resourceId) {
+        return ContextCompat.getColor(getContext(), resourceId);
+    }
+
+    @Override
+    public Drawable getDrawableCompat(int resourceId) {
+        return ContextCompat.getDrawable(getContext(), resourceId);
     }
 }

@@ -4,6 +4,8 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -15,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import kr.co.hs.app.HsActivity;
 import kr.co.hs.content.HsBroadcastReceiver;
@@ -60,6 +63,26 @@ public class SampleActivity extends HsActivity implements View.OnClickListener{
 
 //        isrunning = isRunningService(SampleService.class);
 //        Logger.d("a");
+
+
+        PackageManager packageManager = getPackageManager();
+        Intent intent = new Intent(Intent.ACTION_MAIN, null);
+        intent.addCategory(Intent.CATEGORY_HOME);
+
+        List<ResolveInfo> list = packageManager.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
+        for(ResolveInfo info : list)
+        {
+            String strPackageName = info.activityInfo.packageName;
+            Logger.d("a");
+//            arrStr.add(strPackageName);
+        }
+        Logger.d("a");
+//        for(ResolveInfo info : list)
+//        {
+//            String strPackageName = info.activityInfo.packageName;
+//
+//            arrStr.add(strPackageName);
+//        }
     }
 
     IntentFilter filter = new IntentFilter();

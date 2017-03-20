@@ -4,6 +4,7 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -137,6 +138,24 @@ public abstract class HsBroadcastReceiver extends BroadcastReceiver implements I
         if(application != null)
             return application.isRunningService(service);
         return false;
+    }
+
+    @Override
+    public int getColorCompat(int resourceId) {
+        IHsApplication application = getHsApplication();
+        if(application != null)
+            return application.getColorCompat(resourceId);
+        else
+            return 0;
+    }
+
+    @Override
+    public Drawable getDrawableCompat(int resourceId) {
+        IHsApplication application = getHsApplication();
+        if(application != null)
+            return getDrawableCompat(resourceId);
+        else
+            return null;
     }
 
     public abstract void onActionReceive(Context context, String action, Intent intent);
