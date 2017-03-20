@@ -19,6 +19,7 @@ import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
@@ -762,5 +763,15 @@ abstract public class HsActivity extends AppCompatActivity implements HsHandler.
             }
             return super.equals(obj);
         }
+    }
+
+    @Override
+    public int getColorCompat(int resourceId) {
+        return ContextCompat.getColor(getContext(), resourceId);
+    }
+
+    @Override
+    public Drawable getDrawableCompat(int resourceId) {
+        return ContextCompat.getDrawable(getContext(), resourceId);
     }
 }

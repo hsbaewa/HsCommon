@@ -17,6 +17,7 @@ import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -510,5 +511,15 @@ public abstract class HsFragment extends Fragment implements HsUIConstant, HsHan
     public boolean onBackPressed(){
         //기본적으로 true
         return true;
+    }
+
+    @Override
+    public int getColorCompat(int resourceId) {
+        return ContextCompat.getColor(getContext(), resourceId);
+    }
+
+    @Override
+    public Drawable getDrawableCompat(int resourceId) {
+        return ContextCompat.getDrawable(getContext(), resourceId);
     }
 }
