@@ -1,5 +1,6 @@
 package kr.co.hs.common.sample;
 
+import kr.co.hs.app.HsApplication;
 import kr.co.hs.app.HsMultiDexApplication;
 
 /**
@@ -8,5 +9,5 @@ import kr.co.hs.app.HsMultiDexApplication;
  * 패키지명 : kr.co.hs.common.sample
  */
 
-public class SampleApplication extends HsMultiDexApplication {
+public class SampleApplication extends HsApplication {
 }

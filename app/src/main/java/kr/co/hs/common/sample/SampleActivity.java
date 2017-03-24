@@ -6,7 +6,9 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.database.Cursor;
 import android.os.Bundle;
+import android.provider.Telephony;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
@@ -20,8 +22,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import kr.co.hs.app.HsActivity;
+import kr.co.hs.app.HsApplication;
 import kr.co.hs.content.HsBroadcastReceiver;
 import kr.co.hs.util.Logger;
+import kr.co.hs.util.MmsHelper;
 import kr.co.hs.widget.HsFloatingActionButton;
 
 /**
@@ -64,6 +68,17 @@ public class SampleActivity extends HsActivity implements View.OnClickListener{
 //        isrunning = isRunningService(SampleService.class);
 //        Logger.d("a");
 
+        Cursor cursor = getContentResolver().query(Telephony.Mms.CONTENT_URI, null, null, null, null);
+        while(cursor.moveToNext()){
+            long idx = cursor.getLong(cursor.getColumnIndex(Telephony.Mms._ID));
+            int cs = cursor.getInt(cursor.getColumnIndex(Telephony.Mms.SUBJECT_CHARSET));
+            String sub = cursor.getString(cursor.getColumnIndex(Telephony.Mms.SUBJECT));
+
+            String subject = MmsHelper.getInstance().decodeSubject(sub, cs);
+            String body = MmsHelper.getInstance().getPartText(getContext(), idx);
+
+            Logger.d("a");
+        }
 
         PackageManager packageManager = getPackageManager();
         Intent intent = new Intent(Intent.ACTION_MAIN, null);
