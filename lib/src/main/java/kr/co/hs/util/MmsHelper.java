@@ -3,6 +3,7 @@ package kr.co.hs.util;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
+import android.provider.ContactsContract;
 import android.provider.Telephony;
 import android.util.Log;
 
@@ -82,6 +83,48 @@ public class MmsHelper {
                 partCursor.close();
         }
         return text;
+    }
+
+    public String getFromAddress(Context context, long mmsId){
+        Uri.Builder builder = Uri.parse("content://mms").buildUpon();
+        builder.appendPath(String.valueOf(mmsId)).appendPath("addr");
+
+        Cursor cursor = context.getContentResolver().query(builder.build(), null, "type=137", null, null);
+        try{
+            if(cursor.moveToFirst()){
+                return cursor.getString(cursor.getColumnIndex(Telephony.Mms.Addr.ADDRESS));
+            }else
+                return null;
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }finally {
+            if(cursor != null && !cursor.isClosed()){
+                cursor.close();
+            }
+        }
+    }
+
+    public String getFromContact(Context context, String address){
+        Uri uri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI, Uri.encode(address));
+        String[] projection = new String[] {ContactsContract.PhoneLookup.DISPLAY_NAME};
+
+        Cursor cursor = context.getContentResolver().query(uri, projection, null, null, null);
+        try{
+            if (cursor != null) {
+                if (cursor.moveToFirst()){
+                    return cursor.getString(0);
+                }
+            }
+            return null;
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }finally {
+            if(cursor != null && !cursor.isClosed()){
+                cursor.close();
+            }
+        }
     }
 }
 

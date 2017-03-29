@@ -1,5 +1,6 @@
 package kr.co.hs.common.sample;
 
+import android.Manifest;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
@@ -9,6 +10,7 @@ import android.content.pm.ResolveInfo;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.provider.Telephony;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
@@ -23,7 +25,9 @@ import java.util.List;
 
 import kr.co.hs.app.HsActivity;
 import kr.co.hs.app.HsApplication;
+import kr.co.hs.app.OnRequestPermissionResult;
 import kr.co.hs.content.HsBroadcastReceiver;
+import kr.co.hs.content.HsPermissionChecker;
 import kr.co.hs.util.Logger;
 import kr.co.hs.util.MmsHelper;
 import kr.co.hs.widget.HsFloatingActionButton;
@@ -68,17 +72,32 @@ public class SampleActivity extends HsActivity implements View.OnClickListener{
 //        isrunning = isRunningService(SampleService.class);
 //        Logger.d("a");
 
-        Cursor cursor = getContentResolver().query(Telephony.Mms.CONTENT_URI, null, null, null, null);
-        while(cursor.moveToNext()){
-            long idx = cursor.getLong(cursor.getColumnIndex(Telephony.Mms._ID));
-            int cs = cursor.getInt(cursor.getColumnIndex(Telephony.Mms.SUBJECT_CHARSET));
-            String sub = cursor.getString(cursor.getColumnIndex(Telephony.Mms.SUBJECT));
+        String[] permissions = {
+                Manifest.permission.READ_SMS,
+                Manifest.permission.READ_CONTACTS
+        };
+        HsPermissionChecker.requestPermissions(this, permissions, 10, new OnRequestPermissionResult() {
+            @Override
+            public void onResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults, boolean isAllGranted) {
+                if(isAllGranted){
+                    Cursor cursor = getContentResolver().query(Telephony.Mms.CONTENT_URI, null, null, null, null);
+                    while(cursor.moveToNext()){
+                        long idx = cursor.getLong(cursor.getColumnIndex(Telephony.Mms._ID));
+                        int cs = cursor.getInt(cursor.getColumnIndex(Telephony.Mms.SUBJECT_CHARSET));
+                        String sub = cursor.getString(cursor.getColumnIndex(Telephony.Mms.SUBJECT));
 
-            String subject = MmsHelper.getInstance().decodeSubject(sub, cs);
-            String body = MmsHelper.getInstance().getPartText(getContext(), idx);
+                        String subject = MmsHelper.getInstance().decodeSubject(sub, cs);
+                        String body = MmsHelper.getInstance().getPartText(getContext(), idx);
+                        String from = MmsHelper.getInstance().getFromAddress(getContext(), idx);
+                        String contact = MmsHelper.getInstance().getFromContact(getContext(), from);
 
-            Logger.d("a");
-        }
+                        Logger.d("a");
+                    }
+                }
+            }
+        });
+
+
 
         PackageManager packageManager = getPackageManager();
         Intent intent = new Intent(Intent.ACTION_MAIN, null);
