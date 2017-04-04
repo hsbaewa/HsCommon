@@ -64,14 +64,8 @@ public class SampleActivity extends HsActivity implements View.OnClickListener{
 
         boolean isrunning = isRunningService(SampleService.class);
 
-//        if(!isrunning){
-//            Intent serIntent = new Intent(getContext(), SampleService.class);
-//            startService(serIntent);
-//        }
 
-//        isrunning = isRunningService(SampleService.class);
-//        Logger.d("a");
-
+        /*
         String[] permissions = {
                 Manifest.permission.READ_SMS,
                 Manifest.permission.READ_CONTACTS
@@ -96,6 +90,9 @@ public class SampleActivity extends HsActivity implements View.OnClickListener{
                 }
             }
         });
+*/
+
+
 
 
 

@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import kr.co.hs.content.HsBroadcastReceiver;
-import kr.co.hs.content.HsPreferences;
+import kr.co.hs.content.advancedpreference.AdvancedPreference;
 
 /**
  * Created by Bae on 2016-11-23.
@@ -55,7 +55,7 @@ public abstract class HsService extends Service implements IHsService, IHsPackag
     }
 
     @Override
-    public HsPreferences getDefaultPreference() {
+    public AdvancedPreference getDefaultPreference() {
         if(getHsApplication() == null){
             try {
                 throw new Exception("상위 Application 컴포넌트가 HsApplication이어야 합니다.");

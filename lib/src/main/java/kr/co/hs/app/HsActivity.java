@@ -31,7 +31,7 @@ import kr.co.hs.R;
 import kr.co.hs.content.HsBroadcastReceiver;
 import kr.co.hs.content.HsDialogInterface;
 import kr.co.hs.content.HsPermissionChecker;
-import kr.co.hs.content.HsPreferences;
+import kr.co.hs.content.advancedpreference.AdvancedPreference;
 
 
 /**
@@ -385,7 +385,7 @@ abstract public class HsActivity extends AppCompatActivity implements HsHandler.
     }
 
     @Override
-    public HsPreferences getDefaultPreference() {
+    public AdvancedPreference getDefaultPreference() {
         if(getHsApplication() == null){
             try {
                 throw new Exception("상위 Application 컴포넌트가 HsApplication이어야 합니다.");

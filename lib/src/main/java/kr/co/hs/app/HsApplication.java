@@ -17,25 +17,25 @@ import android.telephony.TelephonyManager;
 import java.util.ArrayList;
 import java.util.List;
 
-import kr.co.hs.content.HsPreferences;
+import kr.co.hs.content.advancedpreference.AdvancedPreference;
 
 /**
  * Created by Bae on 2016-12-23.
  */
 public abstract class HsApplication extends Application implements IHsApplication, IHsPackageManager{
-    private HsPreferences mPreference;
+    private AdvancedPreference mPreference;
     private final ArrayList<HsActivity.ActivityStatus> mActivityStatusList = new ArrayList<>();
 
     @Override
     public void onCreate() {
         super.onCreate();
         //default 프리퍼런스 초기화
-        mPreference = new HsPreferences(PreferenceManager.getDefaultSharedPreferences(this));
+        mPreference = new AdvancedPreference(PreferenceManager.getDefaultSharedPreferences(this));
     }
 
 
     @Override
-    public HsPreferences getDefaultPreference() {
+    public AdvancedPreference getDefaultPreference() {
         return mPreference;
     }
 

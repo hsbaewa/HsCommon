@@ -17,7 +17,6 @@ import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,7 +30,7 @@ import kr.co.hs.R;
 import kr.co.hs.content.HsBroadcastReceiver;
 import kr.co.hs.content.HsDialogInterface;
 import kr.co.hs.content.HsPermissionChecker;
-import kr.co.hs.content.HsPreferences;
+import kr.co.hs.content.advancedpreference.AdvancedPreference;
 
 
 /**
@@ -385,7 +384,7 @@ public abstract class HsFragment extends Fragment implements HsUIConstant, HsHan
     }
 
     @Override
-    public HsPreferences getDefaultPreference() {
+    public AdvancedPreference getDefaultPreference() {
         if(getHsApplication() == null){
             try {
                 throw new Exception("상위 Application 컴포넌트가 HsApplication이어야 합니다.");
