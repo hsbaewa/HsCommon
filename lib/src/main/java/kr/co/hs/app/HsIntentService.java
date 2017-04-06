@@ -233,7 +233,7 @@ public abstract class HsIntentService extends IntentService implements IHsServic
     public Drawable getDrawableCompat(int resourceId) {
         IHsApplication application = getHsApplication();
         if(application != null)
-            return getDrawableCompat(resourceId);
+            return application.getDrawableCompat(resourceId);
         else
             return null;
     }

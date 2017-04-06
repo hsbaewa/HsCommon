@@ -778,7 +778,7 @@ abstract public class HsActivity extends AppCompatActivity implements HsHandler.
     public Drawable getDrawableCompat(int resourceId) {
         IHsApplication application = getHsApplication();
         if(application != null)
-            return getDrawableCompat(resourceId);
+            return application.getDrawableCompat(resourceId);
         else
             return null;
     }

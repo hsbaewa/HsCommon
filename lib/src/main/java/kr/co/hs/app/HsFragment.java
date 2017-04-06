@@ -525,7 +525,7 @@ public abstract class HsFragment extends Fragment implements HsUIConstant, HsHan
     public Drawable getDrawableCompat(int resourceId) {
         IHsApplication application = getHsApplication();
         if(application != null)
-            return getDrawableCompat(resourceId);
+            return application.getDrawableCompat(resourceId);
         else
             return null;
     }

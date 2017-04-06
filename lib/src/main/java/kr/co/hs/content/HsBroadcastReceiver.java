@@ -154,7 +154,7 @@ public abstract class HsBroadcastReceiver extends BroadcastReceiver implements I
     public Drawable getDrawableCompat(int resourceId) {
         IHsApplication application = getHsApplication();
         if(application != null)
-            return getDrawableCompat(resourceId);
+            return application.getDrawableCompat(resourceId);
         else
             return null;
     }
