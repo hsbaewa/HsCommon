@@ -19,7 +19,6 @@ import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
@@ -120,6 +119,7 @@ abstract public class HsActivity extends AppCompatActivity implements HsHandler.
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         listener.onClick(dialogInterface, i);
+                        mDialog.setOnDismissListener(null);
                         mDialog = null;
                     }
                 };
@@ -151,6 +151,7 @@ abstract public class HsActivity extends AppCompatActivity implements HsHandler.
                         if(mDialog != null){
                             if(listener != null)
                                 listener.onClick(dialogInterface, DialogInterface.BUTTON_NEGATIVE);
+                            mDialog.setOnDismissListener(null);
                             mDialog = null;
                         }
                     }

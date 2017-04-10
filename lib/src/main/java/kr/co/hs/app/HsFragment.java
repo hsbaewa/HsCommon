@@ -124,6 +124,7 @@ public abstract class HsFragment extends Fragment implements HsUIConstant, HsHan
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         listener.onClick(dialogInterface, i);
+                        mDialog.setOnDismissListener(null);
                         mDialog = null;
                     }
                 };
@@ -155,6 +156,7 @@ public abstract class HsFragment extends Fragment implements HsUIConstant, HsHan
                         if(mDialog != null){
                             if(listener != null)
                                 listener.onClick(dialogInterface, DialogInterface.BUTTON_NEGATIVE);
+                            mDialog.setOnDismissListener(null);
                             mDialog = null;
                         }
                     }
