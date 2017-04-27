@@ -30,7 +30,6 @@ import kr.co.hs.R;
 import kr.co.hs.content.HsBroadcastReceiver;
 import kr.co.hs.content.HsDialogInterface;
 import kr.co.hs.content.HsPermissionChecker;
-import kr.co.hs.content.advancedpreference.AdvancedPreference;
 
 
 /**
@@ -383,19 +382,6 @@ public abstract class HsFragment extends Fragment implements HsUIConstant, HsHan
     public IHsPackageManager getHsPackageManager(){
         IHsPackageManager packageManager = (IHsPackageManager) getApplicationContext();
         return packageManager;
-    }
-
-    @Override
-    public AdvancedPreference getDefaultPreference() {
-        if(getHsApplication() == null){
-            try {
-                throw new Exception("상위 Application 컴포넌트가 HsApplication이어야 합니다.");
-            } catch (Exception e) {
-                e.printStackTrace();
-                return null;
-            }
-        }
-        return getHsApplication().getDefaultPreference();
     }
 
     @Override

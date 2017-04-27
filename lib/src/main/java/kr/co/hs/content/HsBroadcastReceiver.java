@@ -11,7 +11,6 @@ import java.util.List;
 
 import kr.co.hs.app.HsActivity;
 import kr.co.hs.app.IHsApplication;
-import kr.co.hs.content.advancedpreference.AdvancedPreference;
 
 /**
  * Created by Bae on 2016-12-06.
@@ -67,14 +66,6 @@ public abstract class HsBroadcastReceiver extends BroadcastReceiver implements I
     public IHsApplication getHsApplication(){
         IHsApplication application = (IHsApplication) getApplicationContext();
         return application;
-    }
-
-    @Override
-    public AdvancedPreference getDefaultPreference() {
-        IHsApplication application = getHsApplication();
-        if(application != null)
-            return application.getDefaultPreference();
-        return null;
     }
 
     @Override

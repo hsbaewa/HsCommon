@@ -4,6 +4,7 @@ import android.app.ActivityManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -17,7 +18,6 @@ import android.telephony.TelephonyManager;
 import java.util.ArrayList;
 import java.util.List;
 
-import kr.co.hs.content.advancedpreference.AdvancedPreference;
 
 
 /**
@@ -27,18 +27,17 @@ import kr.co.hs.content.advancedpreference.AdvancedPreference;
  */
 
 public class HsMultiDexApplication extends MultiDexApplication implements IHsApplication, IHsPackageManager{
-    private AdvancedPreference mPreference;
+    private SharedPreferences mPreference;
     private final ArrayList<HsActivity.ActivityStatus> mActivityStatusList = new ArrayList<>();
 
     @Override
     public void onCreate() {
         super.onCreate();
         //default 프리퍼런스 초기화
-        mPreference = new AdvancedPreference(PreferenceManager.getDefaultSharedPreferences(this));
+        mPreference = PreferenceManager.getDefaultSharedPreferences(this);
     }
 
-    @Override
-    public AdvancedPreference getDefaultPreference() {
+    private SharedPreferences getPreference(){
         return mPreference;
     }
 
@@ -114,7 +113,7 @@ public class HsMultiDexApplication extends MultiDexApplication implements IHsApp
             return strDeviceID;
         }
 
-        strDeviceID = getDefaultPreference().getString(PREFERENCE_KEY_DEVICE_ID, null);
+        strDeviceID = getPreference().getString(PREFERENCE_KEY_DEVICE_ID, null);
 
         if(strDeviceID != null && !"".equalsIgnoreCase(strDeviceID))
         {
@@ -122,7 +121,9 @@ public class HsMultiDexApplication extends MultiDexApplication implements IHsApp
         }
 
         strDeviceID = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
-        getDefaultPreference().set(PREFERENCE_KEY_DEVICE_ID, strDeviceID);
+        SharedPreferences.Editor editor = getPreference().edit();
+        editor.putString(PREFERENCE_KEY_DEVICE_ID, strDeviceID);
+        editor.commit();
 
         return strDeviceID;
     }

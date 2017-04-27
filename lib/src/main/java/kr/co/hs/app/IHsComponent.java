@@ -6,8 +6,6 @@ import android.graphics.drawable.Drawable;
 import java.util.ArrayList;
 import java.util.List;
 
-import kr.co.hs.content.advancedpreference.AdvancedPreference;
-
 /**
  * 생성된 시간 2017-01-12, Bae 에 의해 생성됨
  * 프로젝트 이름 : HsCommon
@@ -17,7 +15,6 @@ import kr.co.hs.content.advancedpreference.AdvancedPreference;
 public interface IHsComponent extends IHs{
     String EXTRA_REMOTE_CLASS = "kr.co.hs.EXTRA_REMOTE_CLASS";
 
-    AdvancedPreference getDefaultPreference();
     String getDeviceId();
     ArrayList<HsActivity.ActivityStatus> getActivityStatusList();
     String getTopActivity();
