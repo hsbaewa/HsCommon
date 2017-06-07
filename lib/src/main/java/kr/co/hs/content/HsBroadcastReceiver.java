@@ -150,5 +150,23 @@ public abstract class HsBroadcastReceiver extends BroadcastReceiver implements I
             return null;
     }
 
+    @Override
+    public String getVersionName() {
+        IHsApplication application = getHsApplication();
+        if(application != null)
+            return application.getVersionName();
+        else
+            return null;
+    }
+
+    @Override
+    public int getVersionCode() {
+        IHsApplication application = getHsApplication();
+        if(application != null)
+            return application.getVersionCode();
+        else
+            return -1;
+    }
+
     public abstract void onActionReceive(Context context, String action, Intent intent);
 }

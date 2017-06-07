@@ -430,6 +430,19 @@ public abstract class HsFragment extends Fragment implements HsUIConstant, HsHan
         return getHsPackageManager().getPackageInfo(packageName, flags);
     }
 
+    public String getPackageName(){
+        Context context = getContext();
+        if(context != null)
+            return context.getPackageName();
+        else
+            return null;
+    }
+
+    @Override
+    public PackageInfo getPackageInfo(int flags) throws PackageManager.NameNotFoundException {
+        return getPackageInfo(getPackageName(), flags);
+    }
+
     @Override
     public List<ApplicationInfo> getInstalledApplications(int flags) {
         return getHsPackageManager().getInstalledApplications(flags);

@@ -97,6 +97,11 @@ public abstract class HsIntentService extends IntentService implements IHsServic
     }
 
     @Override
+    public PackageInfo getPackageInfo(int flags) throws PackageManager.NameNotFoundException {
+        return getPackageInfo(getPackageName(), flags);
+    }
+
+    @Override
     public List<ApplicationInfo> getInstalledApplications(int flags) {
         return getHsPackageManager().getInstalledApplications(flags);
     }
@@ -222,5 +227,23 @@ public abstract class HsIntentService extends IntentService implements IHsServic
             return application.getDrawableCompat(resourceId);
         else
             return null;
+    }
+
+    @Override
+    public String getVersionName() {
+        IHsApplication application = getHsApplication();
+        if(application != null)
+            return application.getVersionName();
+        else
+            return null;
+    }
+
+    @Override
+    public int getVersionCode() {
+        IHsApplication application = getHsApplication();
+        if(application != null)
+            return application.getVersionCode();
+        else
+            return -1;
     }
 }

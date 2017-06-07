@@ -29,4 +29,8 @@ public interface IHsComponent extends IHs{
     //리소스 getter 추가
     int getColorCompat(int resourceId);
     Drawable getDrawableCompat(int resourceId);
+
+    //앱 버전 정보 추가
+    String getVersionName();
+    int getVersionCode();
 }

@@ -75,6 +75,11 @@ public class HsMultiDexApplication extends MultiDexApplication implements IHsApp
         return getPackageManager().getPackageInfo(packageName, flags);
     }
 
+    @Override
+    public PackageInfo getPackageInfo(int flags) throws PackageManager.NameNotFoundException {
+        return getPackageInfo(getPackageName(), flags);
+    }
+
     /**
      * 패키지 매니저 관련 depth 줄이기 위하여 추가
      * @param flags
@@ -222,5 +227,27 @@ public class HsMultiDexApplication extends MultiDexApplication implements IHsApp
     @Override
     public Drawable getDrawableCompat(int resourceId) {
         return ContextCompat.getDrawable(getContext(), resourceId);
+    }
+
+    @Override
+    public String getVersionName() {
+        try {
+            PackageInfo packageInfo = getPackageInfo(PackageManager.GET_META_DATA);
+            return packageInfo.versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public int getVersionCode() {
+        try {
+            PackageInfo packageInfo = getPackageInfo(PackageManager.GET_META_DATA);
+            return packageInfo.versionCode;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return -1;
     }
 }

@@ -45,6 +45,7 @@ public interface IHsPackageManager {
      * @throws PackageManager.NameNotFoundException
      */
     PackageInfo getPackageInfo(String packageName, int flags) throws PackageManager.NameNotFoundException;
+    PackageInfo getPackageInfo(int flags) throws PackageManager.NameNotFoundException;
 
     /**
      * 패키지 매니저 관련 depth 줄이기 위하여 추가
