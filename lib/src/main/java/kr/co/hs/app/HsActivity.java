@@ -792,4 +792,13 @@ abstract public class HsActivity extends AppCompatActivity implements HsHandler.
         else
             return -1;
     }
+
+    @Override
+    public boolean isForeground() {
+        IHsApplication application = getHsApplication();
+        if(application != null)
+            return application.isForeground();
+        else
+            return false;
+    }
 }

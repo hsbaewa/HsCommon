@@ -236,4 +236,13 @@ public abstract class HsService extends Service implements IHsService, IHsPackag
         else
             return -1;
     }
+
+    @Override
+    public boolean isForeground() {
+        IHsApplication application = getHsApplication();
+        if(application != null)
+            return application.isForeground();
+        else
+            return false;
+    }
 }

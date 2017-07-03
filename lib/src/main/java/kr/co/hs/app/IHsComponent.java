@@ -33,4 +33,7 @@ public interface IHsComponent extends IHs{
     //앱 버전 정보 추가
     String getVersionName();
     int getVersionCode();
+
+    //자신이 포어그라운드인지 백그라운드인지 확인
+    boolean isForeground();
 }

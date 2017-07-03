@@ -168,5 +168,14 @@ public abstract class HsBroadcastReceiver extends BroadcastReceiver implements I
             return -1;
     }
 
+    @Override
+    public boolean isForeground() {
+        IHsApplication application = getHsApplication();
+        if(application != null)
+            return application.isForeground();
+        else
+            return false;
+    }
+
     public abstract void onActionReceive(Context context, String action, Intent intent);
 }

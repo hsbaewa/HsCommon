@@ -246,4 +246,13 @@ public abstract class HsIntentService extends IntentService implements IHsServic
         else
             return -1;
     }
+
+    @Override
+    public boolean isForeground() {
+        IHsApplication application = getHsApplication();
+        if(application != null)
+            return application.isForeground();
+        else
+            return false;
+    }
 }
