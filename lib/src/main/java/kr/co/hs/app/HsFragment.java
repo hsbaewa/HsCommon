@@ -241,6 +241,18 @@ public abstract class HsFragment extends Fragment implements HsUIConstant, HsHan
     }
 
     @Override
+    public void showAlertDialog(String message) {
+        Bundle data = new Bundle();
+        data.putString(DIALOG_MESSAGE, message);
+        sendMessage(HD_SHOW_ALERT_DIALOG, data);
+    }
+
+    @Override
+    public void showAlertDialog(int messageId) {
+        showAlertDialog(getString(messageId));
+    }
+
+    @Override
     public void showAlertDialog(String title, String message) {
         Bundle data = new Bundle();
         data.putString(DIALOG_TITLE, title);
@@ -249,10 +261,28 @@ public abstract class HsFragment extends Fragment implements HsUIConstant, HsHan
     }
 
     @Override
-    public void showAlertDialog(String message) {
-        Bundle data = new Bundle();
-        data.putString(DIALOG_MESSAGE, message);
-        sendMessage(HD_SHOW_ALERT_DIALOG, data);
+    public void showAlertDialog(int titleId, String message) {
+        showAlertDialog(getString(titleId), message);
+    }
+
+    @Override
+    public void showAlertDialog(String title, int messageId) {
+        showAlertDialog(title, getString(messageId));
+    }
+
+    @Override
+    public void showAlertDialog(int titleId, int messageId) {
+        showAlertDialog(getString(titleId), getString(messageId));
+    }
+
+    @Override
+    public void showAlertDialog(int messageId, HsDialogInterface.OnClickListener listener) {
+        showAlertDialog(getString(messageId), getString(R.string.common_ok), listener);
+    }
+
+    @Override
+    public void showAlertDialog(String message, HsDialogInterface.OnClickListener listener) {
+        showAlertDialog(message, getString(R.string.common_ok), listener);
     }
 
     @Override
@@ -273,8 +303,228 @@ public abstract class HsFragment extends Fragment implements HsUIConstant, HsHan
     }
 
     @Override
+    public void showAlertDialog(String title, String message, String positiveCaption, String neutralCaption, int negativeCaption, HsDialogInterface.OnClickListener listener) {
+        showAlertDialog(title, message, positiveCaption, neutralCaption, getString(negativeCaption), listener);
+    }
+
+    @Override
+    public void showAlertDialog(String title, String message, String positiveCaption, int neutralCaption, String negativeCaption, HsDialogInterface.OnClickListener listener) {
+        showAlertDialog(title, message, positiveCaption, getString(neutralCaption), negativeCaption, listener);
+    }
+
+    @Override
+    public void showAlertDialog(String title, String message, String positiveCaption, int neutralCaption, int negativeCaption, HsDialogInterface.OnClickListener listener) {
+        showAlertDialog(title, message, positiveCaption, getString(neutralCaption), getString(negativeCaption), listener);
+    }
+
+    @Override
+    public void showAlertDialog(String title, String message, int positiveCaption, String neutralCaption, String negativeCaption, HsDialogInterface.OnClickListener listener) {
+        showAlertDialog(title, message, getString(positiveCaption), neutralCaption, negativeCaption, listener);
+    }
+
+    @Override
+    public void showAlertDialog(String title, String message, int positiveCaption, String neutralCaption, int negativeCaption, HsDialogInterface.OnClickListener listener) {
+        showAlertDialog(title, message, getString(positiveCaption), neutralCaption, getString(negativeCaption), listener);
+    }
+
+    @Override
+    public void showAlertDialog(String title, String message, int positiveCaption, int neutralCaption, String negativeCaption, HsDialogInterface.OnClickListener listener) {
+        showAlertDialog(title, message, getString(positiveCaption), getString(neutralCaption), negativeCaption, listener);
+    }
+
+    @Override
+    public void showAlertDialog(String title, String message, int positiveCaption, int neutralCaption, int negativeCaption, HsDialogInterface.OnClickListener listener) {
+        showAlertDialog(title, message, getString(positiveCaption), getString(neutralCaption), getString(negativeCaption), listener);
+    }
+
+    @Override
+    public void showAlertDialog(String title, int message, String positiveCaption, String neutralCaption, String negativeCaption, HsDialogInterface.OnClickListener listener) {
+        showAlertDialog(title, getString(message), positiveCaption, neutralCaption, negativeCaption, listener);
+    }
+
+    @Override
+    public void showAlertDialog(String title, int message, String positiveCaption, String neutralCaption, int negativeCaption, HsDialogInterface.OnClickListener listener) {
+        showAlertDialog(title, getString(message), positiveCaption, neutralCaption, getString(negativeCaption), listener);
+    }
+
+    @Override
+    public void showAlertDialog(String title, int message, String positiveCaption, int neutralCaption, String negativeCaption, HsDialogInterface.OnClickListener listener) {
+        showAlertDialog(title, getString(message), positiveCaption, getString(neutralCaption), negativeCaption, listener);
+    }
+
+    @Override
+    public void showAlertDialog(String title, int message, String positiveCaption, int neutralCaption, int negativeCaption, HsDialogInterface.OnClickListener listener) {
+        showAlertDialog(title, getString(message), positiveCaption, getString(neutralCaption), getString(negativeCaption), listener);
+    }
+
+    @Override
+    public void showAlertDialog(int title, String message, String positiveCaption, String neutralCaption, String negativeCaption, HsDialogInterface.OnClickListener listener) {
+        showAlertDialog(getString(title), message, positiveCaption, neutralCaption, negativeCaption, listener);
+    }
+
+    @Override
+    public void showAlertDialog(int title, String message, String positiveCaption, String neutralCaption, int negativeCaption, HsDialogInterface.OnClickListener listener) {
+        showAlertDialog(getString(title), message, positiveCaption, neutralCaption, getString(negativeCaption), listener);
+    }
+
+    @Override
+    public void showAlertDialog(int title, String message, String positiveCaption, int neutralCaption, String negativeCaption, HsDialogInterface.OnClickListener listener) {
+        showAlertDialog(getString(title), message, positiveCaption, getString(neutralCaption), negativeCaption, listener);
+    }
+
+    @Override
+    public void showAlertDialog(int title, String message, String positiveCaption, int neutralCaption, int negativeCaption, HsDialogInterface.OnClickListener listener) {
+        showAlertDialog(getString(title), message, positiveCaption, getString(neutralCaption), getString(negativeCaption), listener);
+    }
+
+    @Override
+    public void showAlertDialog(String title, int message, int positiveCaption, String neutralCaption, String negativeCaption, HsDialogInterface.OnClickListener listener) {
+        showAlertDialog(title, getString(message), getString(positiveCaption), neutralCaption, negativeCaption, listener);
+    }
+
+    @Override
+    public void showAlertDialog(String title, int message, int positiveCaption, String neutralCaption, int negativeCaption, HsDialogInterface.OnClickListener listener) {
+        showAlertDialog(title, getString(message), getString(positiveCaption), neutralCaption, getString(negativeCaption), listener);
+    }
+
+    @Override
+    public void showAlertDialog(String title, int message, int positiveCaption, int neutralCaption, String negativeCaption, HsDialogInterface.OnClickListener listener) {
+        showAlertDialog(title, getString(message), getString(positiveCaption), getString(neutralCaption), negativeCaption, listener);
+    }
+
+    @Override
+    public void showAlertDialog(String title, int message, int positiveCaption, int neutralCaption, int negativeCaption, HsDialogInterface.OnClickListener listener) {
+        showAlertDialog(title, getString(message), getString(positiveCaption), getString(neutralCaption), getString(negativeCaption), listener);
+    }
+
+    @Override
+    public void showAlertDialog(int title, int message, String positiveCaption, String neutralCaption, String negativeCaption, HsDialogInterface.OnClickListener listener) {
+        showAlertDialog(getString(title), getString(message), positiveCaption, neutralCaption, negativeCaption, listener);
+    }
+
+    @Override
+    public void showAlertDialog(int title, int message, String positiveCaption, String neutralCaption, int negativeCaption, HsDialogInterface.OnClickListener listener) {
+        showAlertDialog(getString(title), getString(message), positiveCaption, neutralCaption, getString(negativeCaption), listener);
+    }
+
+    @Override
+    public void showAlertDialog(int title, int message, String positiveCaption, int neutralCaption, String negativeCaption, HsDialogInterface.OnClickListener listener) {
+        showAlertDialog(getString(title), getString(message), positiveCaption, getString(neutralCaption), negativeCaption, listener);
+    }
+
+    @Override
+    public void showAlertDialog(int title, int message, String positiveCaption, int neutralCaption, int negativeCaption, HsDialogInterface.OnClickListener listener) {
+        showAlertDialog(getString(title), getString(message), positiveCaption, getString(neutralCaption), getString(negativeCaption), listener);
+    }
+
+    @Override
+    public void showAlertDialog(int title, String message, int positiveCaption, String neutralCaption, String negativeCaption, HsDialogInterface.OnClickListener listener) {
+        showAlertDialog(getString(title), message, getString(positiveCaption), neutralCaption, negativeCaption, listener);
+    }
+
+    @Override
+    public void showAlertDialog(int title, String message, int positiveCaption, String neutralCaption, int negativeCaption, HsDialogInterface.OnClickListener listener) {
+        showAlertDialog(getString(title), message, getString(positiveCaption), neutralCaption, getString(negativeCaption), listener);
+    }
+
+    @Override
+    public void showAlertDialog(int title, String message, int positiveCaption, int neutralCaption, String negativeCaption, HsDialogInterface.OnClickListener listener) {
+        showAlertDialog(getString(title), message, getString(positiveCaption), getString(neutralCaption), negativeCaption, listener);
+    }
+
+    @Override
+    public void showAlertDialog(int title, String message, int positiveCaption, int neutralCaption, int negativeCaption, HsDialogInterface.OnClickListener listener) {
+        showAlertDialog(getString(title), message, getString(positiveCaption), getString(neutralCaption), getString(negativeCaption), listener);
+    }
+
+    @Override
+    public void showAlertDialog(int title, int message, int positiveCaption, String neutralCaption, String negativeCaption, HsDialogInterface.OnClickListener listener) {
+        showAlertDialog(getString(title), getString(message), getString(positiveCaption), neutralCaption, negativeCaption, listener);
+    }
+
+    @Override
+    public void showAlertDialog(int title, int message, int positiveCaption, String neutralCaption, int negativeCaption, HsDialogInterface.OnClickListener listener) {
+        showAlertDialog(getString(title), getString(message), getString(positiveCaption), neutralCaption, getString(negativeCaption), listener);
+    }
+
+    @Override
+    public void showAlertDialog(int title, int message, int positiveCaption, int neutralCaption, String negativeCaption, HsDialogInterface.OnClickListener listener) {
+        showAlertDialog(getString(title), getString(message), getString(positiveCaption), getString(neutralCaption), negativeCaption, listener);
+    }
+
+    @Override
     public void showAlertDialog(int resTitle, int resMessage, int resPositiveCaption, int resNegativeCaption, HsDialogInterface.OnClickListener listener) {
         showAlertDialog(getString(resTitle), getString(resMessage), getString(resPositiveCaption), getString(resNegativeCaption), listener);
+    }
+
+    @Override
+    public void showAlertDialog(int title, int message, int positiveCaption, String negativeCaption, HsDialogInterface.OnClickListener listener) {
+        showAlertDialog(getString(title), getString(message), getString(positiveCaption), null, negativeCaption, listener);
+    }
+
+    @Override
+    public void showAlertDialog(int title, int message, String positiveCaption, int negativeCaption, HsDialogInterface.OnClickListener listener) {
+        showAlertDialog(getString(title), getString(message), positiveCaption, null, getString(negativeCaption), listener);
+    }
+
+    @Override
+    public void showAlertDialog(int title, int message, String positiveCaption, String negativeCaption, HsDialogInterface.OnClickListener listener) {
+        showAlertDialog(getString(title), getString(message), positiveCaption, null, negativeCaption, listener);
+    }
+
+    @Override
+    public void showAlertDialog(int title, String message, int positiveCaption, int negativeCaption, HsDialogInterface.OnClickListener listener) {
+        showAlertDialog(getString(title), message, getString(positiveCaption), null, getString(negativeCaption), listener);
+    }
+
+    @Override
+    public void showAlertDialog(int title, String message, int positiveCaption, String negativeCaption, HsDialogInterface.OnClickListener listener) {
+        showAlertDialog(getString(title), message, getString(positiveCaption), null, negativeCaption, listener);
+    }
+
+    @Override
+    public void showAlertDialog(int title, String message, String positiveCaption, int negativeCaption, HsDialogInterface.OnClickListener listener) {
+        showAlertDialog(getString(title), message, positiveCaption, null, getString(negativeCaption), listener);
+    }
+
+    @Override
+    public void showAlertDialog(int title, String message, String positiveCaption, String negativeCaption, HsDialogInterface.OnClickListener listener) {
+        showAlertDialog(getString(title), message, positiveCaption, null, negativeCaption, listener);
+    }
+
+    @Override
+    public void showAlertDialog(String title, int message, int positiveCaption, int negativeCaption, HsDialogInterface.OnClickListener listener) {
+        showAlertDialog(title, getString(message), getString(positiveCaption), null, getString(negativeCaption), listener);
+    }
+
+    @Override
+    public void showAlertDialog(String title, int message, int positiveCaption, String negativeCaption, HsDialogInterface.OnClickListener listener) {
+        showAlertDialog(title, getString(message), getString(positiveCaption), null, negativeCaption, listener);
+    }
+
+    @Override
+    public void showAlertDialog(String title, int message, String positiveCaption, int negativeCaption, HsDialogInterface.OnClickListener listener) {
+        showAlertDialog(title, getString(message), positiveCaption, null, getString(negativeCaption), listener);
+    }
+
+    @Override
+    public void showAlertDialog(String title, int message, String positiveCaption, String negativeCaption, HsDialogInterface.OnClickListener listener) {
+        showAlertDialog(title, getString(message), positiveCaption, null, negativeCaption, listener);
+    }
+
+    @Override
+    public void showAlertDialog(String title, String message, int positiveCaption, int negativeCaption, HsDialogInterface.OnClickListener listener) {
+        showAlertDialog(title, message, getString(positiveCaption), null, getString(negativeCaption), listener);
+    }
+
+    @Override
+    public void showAlertDialog(String title, String message, int positiveCaption, String negativeCaption, HsDialogInterface.OnClickListener listener) {
+        showAlertDialog(title, message, getString(positiveCaption), null, negativeCaption, listener);
+    }
+
+    @Override
+    public void showAlertDialog(String title, String message, String positiveCaption, int negativeCaption, HsDialogInterface.OnClickListener listener) {
+        showAlertDialog(title, message, positiveCaption, null, getString(negativeCaption), listener);
     }
 
     @Override
@@ -288,6 +538,36 @@ public abstract class HsFragment extends Fragment implements HsUIConstant, HsHan
     }
 
     @Override
+    public void showAlertDialog(int title, int message, String positiveCaption, HsDialogInterface.OnClickListener listener) {
+        showAlertDialog(getString(title), getString(message), positiveCaption, null, null, listener);
+    }
+
+    @Override
+    public void showAlertDialog(int title, String message, int positiveCaption, HsDialogInterface.OnClickListener listener) {
+        showAlertDialog(getString(title), message, getString(positiveCaption), null, null, listener);
+    }
+
+    @Override
+    public void showAlertDialog(int title, String message, String positiveCaption, HsDialogInterface.OnClickListener listener) {
+        showAlertDialog(getString(title), message, positiveCaption, null, null, listener);
+    }
+
+    @Override
+    public void showAlertDialog(String title, int message, int positiveCaption, HsDialogInterface.OnClickListener listener) {
+        showAlertDialog(title, getString(message), getString(positiveCaption), null, null, listener);
+    }
+
+    @Override
+    public void showAlertDialog(String title, int message, String positiveCaption, HsDialogInterface.OnClickListener listener) {
+        showAlertDialog(title, getString(message), positiveCaption, null, null, listener);
+    }
+
+    @Override
+    public void showAlertDialog(String title, String message, int positiveCaption, HsDialogInterface.OnClickListener listener) {
+        showAlertDialog(title, message, getString(positiveCaption), null, null, listener);
+    }
+
+    @Override
     public void showAlertDialog(String title, String message, String positiveCaption, HsDialogInterface.OnClickListener listener) {
         showAlertDialog(title, message, positiveCaption, null, null, listener);
     }
@@ -295,6 +575,16 @@ public abstract class HsFragment extends Fragment implements HsUIConstant, HsHan
     @Override
     public void showAlertDialog(int resMessage, int resPositiveCaption, HsDialogInterface.OnClickListener listener) {
         showAlertDialog(getString(resMessage), getString(resPositiveCaption), listener);
+    }
+
+    @Override
+    public void showAlertDialog(int messageId, String positiveCaption, HsDialogInterface.OnClickListener listener) {
+        showAlertDialog(null, getString(messageId), positiveCaption, null, null, listener);
+    }
+
+    @Override
+    public void showAlertDialog(String message, int positiveCaptionId, HsDialogInterface.OnClickListener listener) {
+        showAlertDialog(null, message, getString(positiveCaptionId), null, null ,listener);
     }
 
     @Override
@@ -311,11 +601,38 @@ public abstract class HsFragment extends Fragment implements HsUIConstant, HsHan
     }
 
     @Override
+    public void showProgressDialog(int titleId, int messageId) {
+        showProgressDialog(getString(titleId), getString(messageId));
+    }
+
+    @Override
+    public void showProgressDialog(int titleId, String message) {
+        showProgressDialog(getString(titleId), message);
+    }
+
+    @Override
+    public void showProgressDialog(String title, int messageId) {
+        showProgressDialog(title, getString(messageId));
+    }
+
+    @Override
     public void showProgressDialog(String message) {
         Bundle data = new Bundle();
         data.putString(DIALOG_MESSAGE, message);
         sendMessage(HD_SHOW_PROGRESS_DIALOG, data);
     }
+
+    @Override
+    public void showProgressDialog(int messageId) {
+        showProgressDialog(getString(messageId));
+    }
+
+
+
+
+
+
+
 
     @Override
     public void dismissDialog() {

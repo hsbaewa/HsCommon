@@ -27,18 +27,102 @@ public interface HsUIConstant extends HsConstant {
     String TOAST_MESSAGE = "ToastMessage";
     String TOAST_DURATION = "ToastDuration";
 
-    void showAlertDialog(int resTitle, int resMsg, int resPositiveCaption, int resNeutralCaption, int resNegativeCaption, HsDialogInterface.OnClickListener listener);
-    void showAlertDialog(String title, String message, String positiveCaption, String neutralCaption, String negativeCaption, HsDialogInterface.OnClickListener listener);
-    void showAlertDialog(int resTitle, int resMessage, int resPositiveCaption, int resNegativeCaption, HsDialogInterface.OnClickListener listener);
-    void showAlertDialog(String title, String message, String positiveCaption, String negativeCaption, HsDialogInterface.OnClickListener listener);
-    void showAlertDialog(int resTitle, int resMessage, int resPositiveCaption, HsDialogInterface.OnClickListener listener);
-    void showAlertDialog(String title, String message, String positiveCaption, HsDialogInterface.OnClickListener listener);
-    void showAlertDialog(int resMessage, int resPositiveCaption, HsDialogInterface.OnClickListener listener);
-    void showAlertDialog(String message, String positiveCaption, HsDialogInterface.OnClickListener listener);
-    void showAlertDialog(String title, String message);
     void showAlertDialog(String message);
-    void showProgressDialog(String title, String message);
+    void showAlertDialog(int messageId);
+
+    void showAlertDialog(int titleId, String message);
+    void showAlertDialog(String title, int messageId);
+    void showAlertDialog(int titleId, int messageId);
+    void showAlertDialog(String title, String message);
+
+    void showAlertDialog(int messageId, HsDialogInterface.OnClickListener listener);
+    void showAlertDialog(String message, HsDialogInterface.OnClickListener listener);
+
+    void showAlertDialog(int messageId, int positiveCaptionId, HsDialogInterface.OnClickListener listener);
+    void showAlertDialog(int messageId, String positiveCaption, HsDialogInterface.OnClickListener listener);
+    void showAlertDialog(String message, int positiveCaptionId, HsDialogInterface.OnClickListener listener);
+    void showAlertDialog(String message, String positiveCaption, HsDialogInterface.OnClickListener listener);
+
+    void showAlertDialog(int title, int message, int positiveCaption, HsDialogInterface.OnClickListener listener);
+    void showAlertDialog(int title, int message, String positiveCaption, HsDialogInterface.OnClickListener listener);
+    void showAlertDialog(int title, String message, int positiveCaption, HsDialogInterface.OnClickListener listener);
+    void showAlertDialog(int title, String message, String positiveCaption, HsDialogInterface.OnClickListener listener);
+
+    void showAlertDialog(String title, int message, int positiveCaption, HsDialogInterface.OnClickListener listener);
+    void showAlertDialog(String title, int message, String positiveCaption, HsDialogInterface.OnClickListener listener);
+    void showAlertDialog(String title, String message, int positiveCaption, HsDialogInterface.OnClickListener listener);
+    void showAlertDialog(String title, String message, String positiveCaption, HsDialogInterface.OnClickListener listener);
+
+    void showAlertDialog(int title, int message, int positiveCaption, int negativeCaption, HsDialogInterface.OnClickListener listener);
+    void showAlertDialog(int title, int message, int positiveCaption, String negativeCaption, HsDialogInterface.OnClickListener listener);
+    void showAlertDialog(int title, int message, String positiveCaption, int negativeCaption, HsDialogInterface.OnClickListener listener);
+    void showAlertDialog(int title, int message, String positiveCaption, String negativeCaption, HsDialogInterface.OnClickListener listener);
+
+    void showAlertDialog(int title, String message, int positiveCaption, int negativeCaption, HsDialogInterface.OnClickListener listener);
+    void showAlertDialog(int title, String message, int positiveCaption, String negativeCaption, HsDialogInterface.OnClickListener listener);
+    void showAlertDialog(int title, String message, String positiveCaption, int negativeCaption, HsDialogInterface.OnClickListener listener);
+    void showAlertDialog(int title, String message, String positiveCaption, String negativeCaption, HsDialogInterface.OnClickListener listener);
+
+    void showAlertDialog(String title, int message, int positiveCaption, int negativeCaption, HsDialogInterface.OnClickListener listener);
+    void showAlertDialog(String title, int message, int positiveCaption, String negativeCaption, HsDialogInterface.OnClickListener listener);
+    void showAlertDialog(String title, int message, String positiveCaption, int negativeCaption, HsDialogInterface.OnClickListener listener);
+    void showAlertDialog(String title, int message, String positiveCaption, String negativeCaption, HsDialogInterface.OnClickListener listener);
+
+    void showAlertDialog(String title, String message, int positiveCaption, int negativeCaption, HsDialogInterface.OnClickListener listener);
+    void showAlertDialog(String title, String message, int positiveCaption, String negativeCaption, HsDialogInterface.OnClickListener listener);
+    void showAlertDialog(String title, String message, String positiveCaption, int negativeCaption, HsDialogInterface.OnClickListener listener);
+    void showAlertDialog(String title, String message, String positiveCaption, String negativeCaption, HsDialogInterface.OnClickListener listener);
+
+    void showAlertDialog(String title, String message, String positiveCaption, String neutralCaption, String negativeCaption, HsDialogInterface.OnClickListener listener);
+    void showAlertDialog(String title, String message, String positiveCaption, String neutralCaption, int negativeCaption, HsDialogInterface.OnClickListener listener);
+    void showAlertDialog(String title, String message, String positiveCaption, int neutralCaption, String negativeCaption, HsDialogInterface.OnClickListener listener);
+    void showAlertDialog(String title, String message, String positiveCaption, int neutralCaption, int negativeCaption, HsDialogInterface.OnClickListener listener);
+
+    void showAlertDialog(String title, String message, int positiveCaption, String neutralCaption, String negativeCaption, HsDialogInterface.OnClickListener listener);
+    void showAlertDialog(String title, String message, int positiveCaption, String neutralCaption, int negativeCaption, HsDialogInterface.OnClickListener listener);
+    void showAlertDialog(String title, String message, int positiveCaption, int neutralCaption, String negativeCaption, HsDialogInterface.OnClickListener listener);
+    void showAlertDialog(String title, String message, int positiveCaption, int neutralCaption, int negativeCaption, HsDialogInterface.OnClickListener listener);
+
+    void showAlertDialog(String title, int message, String positiveCaption, String neutralCaption, String negativeCaption, HsDialogInterface.OnClickListener listener);
+    void showAlertDialog(String title, int message, String positiveCaption, String neutralCaption, int negativeCaption, HsDialogInterface.OnClickListener listener);
+    void showAlertDialog(String title, int message, String positiveCaption, int neutralCaption, String negativeCaption, HsDialogInterface.OnClickListener listener);
+    void showAlertDialog(String title, int message, String positiveCaption, int neutralCaption, int negativeCaption, HsDialogInterface.OnClickListener listener);
+
+    void showAlertDialog(int title, String message, String positiveCaption, String neutralCaption, String negativeCaption, HsDialogInterface.OnClickListener listener);
+    void showAlertDialog(int title, String message, String positiveCaption, String neutralCaption, int negativeCaption, HsDialogInterface.OnClickListener listener);
+    void showAlertDialog(int title, String message, String positiveCaption, int neutralCaption, String negativeCaption, HsDialogInterface.OnClickListener listener);
+    void showAlertDialog(int title, String message, String positiveCaption, int neutralCaption, int negativeCaption, HsDialogInterface.OnClickListener listener);
+
+    void showAlertDialog(String title, int message, int positiveCaption, String neutralCaption, String negativeCaption, HsDialogInterface.OnClickListener listener);
+    void showAlertDialog(String title, int message, int positiveCaption, String neutralCaption, int negativeCaption, HsDialogInterface.OnClickListener listener);
+    void showAlertDialog(String title, int message, int positiveCaption, int neutralCaption, String negativeCaption, HsDialogInterface.OnClickListener listener);
+    void showAlertDialog(String title, int message, int positiveCaption, int neutralCaption, int negativeCaption, HsDialogInterface.OnClickListener listener);
+
+    void showAlertDialog(int title, int message, String positiveCaption, String neutralCaption, String negativeCaption, HsDialogInterface.OnClickListener listener);
+    void showAlertDialog(int title, int message, String positiveCaption, String neutralCaption, int negativeCaption, HsDialogInterface.OnClickListener listener);
+    void showAlertDialog(int title, int message, String positiveCaption, int neutralCaption, String negativeCaption, HsDialogInterface.OnClickListener listener);
+    void showAlertDialog(int title, int message, String positiveCaption, int neutralCaption, int negativeCaption, HsDialogInterface.OnClickListener listener);
+
+    void showAlertDialog(int title, String message, int positiveCaption, String neutralCaption, String negativeCaption, HsDialogInterface.OnClickListener listener);
+    void showAlertDialog(int title, String message, int positiveCaption, String neutralCaption, int negativeCaption, HsDialogInterface.OnClickListener listener);
+    void showAlertDialog(int title, String message, int positiveCaption, int neutralCaption, String negativeCaption, HsDialogInterface.OnClickListener listener);
+    void showAlertDialog(int title, String message, int positiveCaption, int neutralCaption, int negativeCaption, HsDialogInterface.OnClickListener listener);
+
+    void showAlertDialog(int title, int message, int positiveCaption, String neutralCaption, String negativeCaption, HsDialogInterface.OnClickListener listener);
+    void showAlertDialog(int title, int message, int positiveCaption, String neutralCaption, int negativeCaption, HsDialogInterface.OnClickListener listener);
+    void showAlertDialog(int title, int message, int positiveCaption, int neutralCaption, String negativeCaption, HsDialogInterface.OnClickListener listener);
+    void showAlertDialog(int title, int message, int positiveCaption, int neutralCaption, int negativeCaption, HsDialogInterface.OnClickListener listener);
+
+
+
     void showProgressDialog(String message);
+    void showProgressDialog(int messageId);
+
+    void showProgressDialog(String title, String message);
+    void showProgressDialog(int titleId, int messageId);
+    void showProgressDialog(int titleId, String message);
+    void showProgressDialog(String title, int messageId);
+
     void dismissDialog();
     void showToast(int resID, int duration);
     void showToast(String message, int duration);
