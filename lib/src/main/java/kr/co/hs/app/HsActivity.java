@@ -1073,8 +1073,13 @@ abstract public class HsActivity extends AppCompatActivity implements HsHandler.
         IHsApplication application = getHsApplication();
         if(application != null)
             return application.getColorCompat(resourceId);
-        else
-            return 0;
+        else{
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                return getResources().getColor(resourceId, getTheme());
+            }else{
+                return getResources().getColor(resourceId);
+            }
+        }
     }
 
     @Override
@@ -1082,8 +1087,13 @@ abstract public class HsActivity extends AppCompatActivity implements HsHandler.
         IHsApplication application = getHsApplication();
         if(application != null)
             return application.getDrawableCompat(resourceId);
-        else
-            return null;
+        else{
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                return getResources().getDrawable(resourceId, getTheme());
+            }else{
+                return getResources().getDrawable(resourceId);
+            }
+        }
     }
 
     @Override

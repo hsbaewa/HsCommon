@@ -5,6 +5,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -137,8 +138,13 @@ public abstract class HsBroadcastReceiver extends BroadcastReceiver implements I
         IHsApplication application = getHsApplication();
         if(application != null)
             return application.getColorCompat(resourceId);
-        else
-            return 0;
+        else{
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                return getContext().getResources().getColor(resourceId, getContext().getTheme());
+            }else{
+                return getContext().getResources().getColor(resourceId);
+            }
+        }
     }
 
     @Override
@@ -146,8 +152,13 @@ public abstract class HsBroadcastReceiver extends BroadcastReceiver implements I
         IHsApplication application = getHsApplication();
         if(application != null)
             return application.getDrawableCompat(resourceId);
-        else
-            return null;
+        else{
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                return getContext().getResources().getDrawable(resourceId, getContext().getTheme());
+            }else{
+                return getContext().getResources().getDrawable(resourceId);
+            }
+        }
     }
 
     @Override

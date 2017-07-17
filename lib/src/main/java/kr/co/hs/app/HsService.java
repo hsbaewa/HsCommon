@@ -8,6 +8,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.os.Binder;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
@@ -206,8 +207,13 @@ public abstract class HsService extends Service implements IHsService, IHsPackag
         IHsApplication application = getHsApplication();
         if(application != null)
             return application.getColorCompat(resourceId);
-        else
-            return 0;
+        else{
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                return getResources().getColor(resourceId, getTheme());
+            }else{
+                return getResources().getColor(resourceId);
+            }
+        }
     }
 
     @Override
@@ -215,8 +221,13 @@ public abstract class HsService extends Service implements IHsService, IHsPackag
         IHsApplication application = getHsApplication();
         if(application != null)
             return application.getDrawableCompat(resourceId);
-        else
-            return null;
+        else{
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                return getResources().getDrawable(resourceId, getTheme());
+            }else{
+                return getResources().getDrawable(resourceId);
+            }
+        }
     }
 
     @Override
