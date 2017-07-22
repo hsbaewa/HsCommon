@@ -242,6 +242,32 @@ public abstract class HsFragment extends Fragment implements HsUIConstant, HsHan
     }
 
     @Override
+    public void removeMessage(int what) {
+        getHandler().removeMessages(what);
+    }
+
+    @Override
+    public void removeMessage(int what, Object object) {
+        getHandler().removeMessages(what, object);
+    }
+
+
+    @Override
+    public void removeCallbacks(Runnable r) {
+        getHandler().removeCallbacks(r);
+    }
+
+    @Override
+    public void removeCallbacks(Runnable r, Object token) {
+        getHandler().removeCallbacks(r, token);
+    }
+
+    @Override
+    public void removeCallbacksAndMessages(Object token) {
+        getHandler().removeCallbacksAndMessages(token);
+    }
+
+    @Override
     public void showAlertDialog(String message) {
         Bundle data = new Bundle();
         data.putString(DIALOG_MESSAGE, message);

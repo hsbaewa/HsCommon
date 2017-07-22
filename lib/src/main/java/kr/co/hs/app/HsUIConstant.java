@@ -140,4 +140,10 @@ public interface HsUIConstant extends HsConstant {
     void sendMessageDelayed(int what, Object obj, long delayMillis);
     void sendMessageDelayed(int what, Bundle data, long delayMillis);
     void sendMessageDelayed(int what, Object obj, Bundle data, long delayMillis);
+
+    void removeMessage(int what);
+    void removeMessage(int what, Object object);
+    void removeCallbacks(Runnable r);
+    void removeCallbacks(Runnable r, Object token);
+    void removeCallbacksAndMessages(Object token);
 }

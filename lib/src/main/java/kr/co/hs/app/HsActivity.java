@@ -21,10 +21,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import kr.co.hs.HsHandler;
 import kr.co.hs.R;
 import kr.co.hs.content.HsBroadcastReceiver;
@@ -253,6 +251,31 @@ abstract public class HsActivity extends AppCompatActivity implements HsHandler.
         getHandler().sendMessageDelayed(msg, delayMillis);
     }
 
+    @Override
+    public void removeMessage(int what) {
+        getHandler().removeMessages(what);
+    }
+
+    @Override
+    public void removeMessage(int what, Object object) {
+        getHandler().removeMessages(what, object);
+    }
+
+
+    @Override
+    public void removeCallbacks(Runnable r) {
+        getHandler().removeCallbacks(r);
+    }
+
+    @Override
+    public void removeCallbacks(Runnable r, Object token) {
+        getHandler().removeCallbacks(r, token);
+    }
+
+    @Override
+    public void removeCallbacksAndMessages(Object token) {
+        getHandler().removeCallbacksAndMessages(token);
+    }
     @Override
     public void showAlertDialog(String message) {
         Bundle data = new Bundle();
