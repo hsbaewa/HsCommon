@@ -14,6 +14,8 @@ import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.support.v4.content.ContextCompat;
 import android.telephony.TelephonyManager;
+import android.util.DisplayMetrics;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -261,5 +263,27 @@ public abstract class HsApplication extends Application implements IHsApplicatio
             }
         }
         return false;
+    }
+
+
+    public int getStatusBarHeight() {
+        int result = 0;
+        int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
+        if (resourceId > 0) {
+            result = getResources().getDimensionPixelSize(resourceId);
+        }
+        return result;
+    }
+
+    public int getScreenWidth(){
+        DisplayMetrics dm = getApplicationContext().getResources().getDisplayMetrics();
+        int width = dm.widthPixels;
+        return width;
+    }
+
+    public int getScreenHeight(){
+        DisplayMetrics dm = getApplicationContext().getResources().getDisplayMetrics();
+        int height = dm.heightPixels;
+        return height;
     }
 }
