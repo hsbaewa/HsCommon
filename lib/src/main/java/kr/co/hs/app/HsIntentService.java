@@ -8,15 +8,14 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Binder;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import kr.co.hs.content.HsBroadcastReceiver;
 
 /**
@@ -265,5 +264,41 @@ public abstract class HsIntentService extends IntentService implements IHsServic
             return application.isForeground();
         else
             return false;
+    }
+
+    @Override
+    public String getPlayStoreUrl() {
+        IHsApplication application = getHsApplication();
+        if(application != null)
+            return application.getPlayStoreUrl();
+        else
+            return null;
+    }
+
+    @Override
+    public String getPlayStoreUrl(String packageName) {
+        IHsApplication application = getHsApplication();
+        if(application != null)
+            return application.getPlayStoreUrl(packageName);
+        else
+            return null;
+    }
+
+    @Override
+    public Uri getPlayStoreUri() {
+        IHsApplication application = getHsApplication();
+        if(application != null)
+            return application.getPlayStoreUri();
+        else
+            return null;
+    }
+
+    @Override
+    public Uri getPlayStoreUri(String packageName) {
+        IHsApplication application = getHsApplication();
+        if(application != null)
+            return application.getPlayStoreUri(packageName);
+        else
+            return null;
     }
 }

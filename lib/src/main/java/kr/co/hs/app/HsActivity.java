@@ -11,6 +11,7 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Message;
@@ -865,6 +866,7 @@ abstract public class HsActivity extends AppCompatActivity implements HsHandler.
         boolean isAllowBackPressed = true;
         FragmentManager fragmentManager = getSupportFragmentManager();
         if(fragmentManager != null){
+            /*
             List<Fragment> fragmentList = fragmentManager.getFragments();
             if(fragmentList != null){
                 for(Fragment fragment : fragmentList){
@@ -876,6 +878,22 @@ abstract public class HsActivity extends AppCompatActivity implements HsHandler.
                         }
                     }
                 }
+            }
+            */
+            int backStackEntryCount = fragmentManager.getBackStackEntryCount();
+            if(backStackEntryCount > 0){
+                for(int i=backStackEntryCount-1;i>=0;i--){
+                    FragmentManager.BackStackEntry backStackEntry = fragmentManager.getBackStackEntryAt(i);
+                    Fragment fragment = fragmentManager.findFragmentById(backStackEntry.getId());
+                    if(fragment != null && fragment instanceof HsFragment){
+                        HsFragment hsFragment = (HsFragment) fragment;
+                        boolean isOnBackPressed = hsFragment.onBackPressed();
+                        if(isAllowBackPressed){
+                            isAllowBackPressed = isOnBackPressed;
+                        }
+                    }
+                }
+
             }
         }
         if(isAllowBackPressed)
@@ -1144,5 +1162,55 @@ abstract public class HsActivity extends AppCompatActivity implements HsHandler.
             return application.isForeground();
         else
             return false;
+    }
+
+    @Override
+    public String getPlayStoreUrl() {
+        IHsApplication application = getHsApplication();
+        if(application != null)
+            return application.getPlayStoreUrl();
+        else
+            return null;
+    }
+
+    @Override
+    public String getPlayStoreUrl(String packageName) {
+        IHsApplication application = getHsApplication();
+        if(application != null)
+            return application.getPlayStoreUrl(packageName);
+        else
+            return null;
+    }
+
+    @Override
+    public Uri getPlayStoreUri() {
+        IHsApplication application = getHsApplication();
+        if(application != null)
+            return application.getPlayStoreUri();
+        else
+            return null;
+    }
+
+    @Override
+    public Uri getPlayStoreUri(String packageName) {
+        IHsApplication application = getHsApplication();
+        if(application != null)
+            return application.getPlayStoreUri(packageName);
+        else
+            return null;
+    }
+
+    @Override
+    public void startPlayStore(String packageName) {
+        try {
+            startActivity(new Intent(Intent.ACTION_VIEW, getPlayStoreUri(packageName)));
+        } catch (android.content.ActivityNotFoundException anfe) {
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(getPlayStoreUrl(packageName))));
+        }
+    }
+
+    @Override
+    public void startPlayStore() {
+        startPlayStore(getPackageName());
     }
 }

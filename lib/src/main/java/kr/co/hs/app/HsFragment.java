@@ -12,6 +12,7 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Message;
@@ -22,10 +23,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import kr.co.hs.HsHandler;
 import kr.co.hs.R;
 import kr.co.hs.content.HsBroadcastReceiver;
@@ -883,5 +882,56 @@ public abstract class HsFragment extends Fragment implements HsUIConstant, HsHan
                 return getResources().getDrawable(resourceId);
             }
         }
+    }
+
+
+    @Override
+    public String getPlayStoreUrl() {
+        IHsApplication application = getHsApplication();
+        if(application != null)
+            return application.getPlayStoreUrl();
+        else
+            return null;
+    }
+
+    @Override
+    public String getPlayStoreUrl(String packageName) {
+        IHsApplication application = getHsApplication();
+        if(application != null)
+            return application.getPlayStoreUrl(packageName);
+        else
+            return null;
+    }
+
+    @Override
+    public Uri getPlayStoreUri() {
+        IHsApplication application = getHsApplication();
+        if(application != null)
+            return application.getPlayStoreUri();
+        else
+            return null;
+    }
+
+    @Override
+    public Uri getPlayStoreUri(String packageName) {
+        IHsApplication application = getHsApplication();
+        if(application != null)
+            return application.getPlayStoreUri(packageName);
+        else
+            return null;
+    }
+
+    @Override
+    public void startPlayStore(String packageName) {
+        try {
+            startActivity(new Intent(Intent.ACTION_VIEW, getPlayStoreUri(packageName)));
+        } catch (android.content.ActivityNotFoundException anfe) {
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(getPlayStoreUrl(packageName))));
+        }
+    }
+
+    @Override
+    public void startPlayStore() {
+        startPlayStore(getPackageName());
     }
 }

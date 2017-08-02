@@ -18,4 +18,7 @@ public interface IHsFragment {
     //리소스 getter 추가
     int getColorCompat(int resourceId);
     Drawable getDrawableCompat(int resourceId);
+
+    void startPlayStore(String packageName);
+    void startPlayStore();
 }

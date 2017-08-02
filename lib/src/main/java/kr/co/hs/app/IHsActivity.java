@@ -15,4 +15,7 @@ public interface IHsActivity extends IHsComponent{
     HsActivity.ActivityStatus getActivityStatus();
     int addActivityStatus(HsActivity.ActivityStatus status);
     int removeActivityStatus(HsActivity.ActivityStatus status);
+
+    void startPlayStore(String packageName);
+    void startPlayStore();
 }

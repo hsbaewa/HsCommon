@@ -9,12 +9,12 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.support.multidex.MultiDexApplication;
 import android.support.v4.content.ContextCompat;
 import android.telephony.TelephonyManager;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,7 +26,7 @@ import java.util.List;
  * 패키지명 : kr.co.hs.app
  */
 
-public class HsMultiDexApplication extends MultiDexApplication implements IHsApplication, IHsPackageManager{
+public abstract class HsMultiDexApplication extends MultiDexApplication implements IHsApplication, IHsPackageManager{
     private SharedPreferences mPreference;
     private final ArrayList<HsActivity.ActivityStatus> mActivityStatusList = new ArrayList<>();
 
@@ -265,5 +265,25 @@ public class HsMultiDexApplication extends MultiDexApplication implements IHsApp
             }
         }
         return false;
+    }
+
+    @Override
+    public Uri getPlayStoreUri() {
+        return getPlayStoreUri(getPackageName());
+    }
+
+    @Override
+    public Uri getPlayStoreUri(String packageName) {
+        return Uri.parse(String.format(URI_PLAY_STORE_FORMAT, packageName));
+    }
+
+    @Override
+    public String getPlayStoreUrl() {
+        return getPlayStoreUrl(getPackageName());
+    }
+
+    @Override
+    public String getPlayStoreUrl(String packageName) {
+        return String.format(URL_PLAY_STORE_FORMAT, packageName);
     }
 }

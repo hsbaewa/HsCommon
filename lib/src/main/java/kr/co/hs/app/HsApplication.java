@@ -10,6 +10,7 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.support.v4.content.ContextCompat;
@@ -285,5 +286,25 @@ public abstract class HsApplication extends Application implements IHsApplicatio
         DisplayMetrics dm = getApplicationContext().getResources().getDisplayMetrics();
         int height = dm.heightPixels;
         return height;
+    }
+
+    @Override
+    public Uri getPlayStoreUri() {
+        return getPlayStoreUri(getPackageName());
+    }
+
+    @Override
+    public Uri getPlayStoreUri(String packageName) {
+        return Uri.parse(String.format(URI_PLAY_STORE_FORMAT, packageName));
+    }
+
+    @Override
+    public String getPlayStoreUrl() {
+        return getPlayStoreUrl(getPackageName());
+    }
+
+    @Override
+    public String getPlayStoreUrl(String packageName) {
+        return String.format(URL_PLAY_STORE_FORMAT, packageName);
     }
 }

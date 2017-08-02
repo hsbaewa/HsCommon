@@ -5,11 +5,10 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Build;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import kr.co.hs.app.HsActivity;
 import kr.co.hs.app.IHsApplication;
 
@@ -186,6 +185,42 @@ public abstract class HsBroadcastReceiver extends BroadcastReceiver implements I
             return application.isForeground();
         else
             return false;
+    }
+
+    @Override
+    public String getPlayStoreUrl() {
+        IHsApplication application = getHsApplication();
+        if(application != null)
+            return application.getPlayStoreUrl();
+        else
+            return null;
+    }
+
+    @Override
+    public String getPlayStoreUrl(String packageName) {
+        IHsApplication application = getHsApplication();
+        if(application != null)
+            return application.getPlayStoreUrl(packageName);
+        else
+            return null;
+    }
+
+    @Override
+    public Uri getPlayStoreUri() {
+        IHsApplication application = getHsApplication();
+        if(application != null)
+            return application.getPlayStoreUri();
+        else
+            return null;
+    }
+
+    @Override
+    public Uri getPlayStoreUri(String packageName) {
+        IHsApplication application = getHsApplication();
+        if(application != null)
+            return application.getPlayStoreUri(packageName);
+        else
+            return null;
     }
 
     public abstract void onActionReceive(Context context, String action, Intent intent);
