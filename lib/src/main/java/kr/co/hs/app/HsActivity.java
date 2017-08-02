@@ -866,7 +866,6 @@ abstract public class HsActivity extends AppCompatActivity implements HsHandler.
         boolean isAllowBackPressed = true;
         FragmentManager fragmentManager = getSupportFragmentManager();
         if(fragmentManager != null){
-            /*
             List<Fragment> fragmentList = fragmentManager.getFragments();
             if(fragmentList != null){
                 for(Fragment fragment : fragmentList){
@@ -879,7 +878,8 @@ abstract public class HsActivity extends AppCompatActivity implements HsHandler.
                     }
                 }
             }
-            */
+
+            /*
             int backStackEntryCount = fragmentManager.getBackStackEntryCount();
             if(backStackEntryCount > 0){
                 for(int i=backStackEntryCount-1;i>=0;i--){
@@ -895,6 +895,7 @@ abstract public class HsActivity extends AppCompatActivity implements HsHandler.
                 }
 
             }
+            */
         }
         if(isAllowBackPressed)
             super.onBackPressed();
