@@ -152,7 +152,7 @@ public interface HsUIConstant extends HsConstant {
     int getScreenWidthPixels();
     int getScreenHeightPixels();
     float getDensity();
-    float getDensityDpi();
+    int getDensityDpi();
     float getXDpi();
     float getYDpi();
 }

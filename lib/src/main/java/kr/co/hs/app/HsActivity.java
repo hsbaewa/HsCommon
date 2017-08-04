@@ -1240,7 +1240,7 @@ abstract public class HsActivity extends AppCompatActivity implements HsHandler.
     }
 
     @Override
-    public float getDensityDpi() {
+    public int getDensityDpi() {
         return getDisplayMetrics().densityDpi;
     }
 

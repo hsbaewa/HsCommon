@@ -960,7 +960,7 @@ public abstract class HsFragment extends Fragment implements HsUIConstant, HsHan
     }
 
     @Override
-    public float getDensityDpi() {
+    public int getDensityDpi() {
         return getDisplayMetrics().densityDpi;
     }
 
