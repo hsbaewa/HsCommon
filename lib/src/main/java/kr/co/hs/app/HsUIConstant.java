@@ -146,4 +146,13 @@ public interface HsUIConstant extends HsConstant {
     void removeCallbacks(Runnable r);
     void removeCallbacks(Runnable r, Object token);
     void removeCallbacksAndMessages(Object token);
+
+
+    //화면 픽셀 사이즈
+    int getScreenWidthPixels();
+    int getScreenHeightPixels();
+    float getDensity();
+    float getDensityDpi();
+    float getXDpi();
+    float getYDpi();
 }

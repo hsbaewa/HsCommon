@@ -19,9 +19,11 @@ import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
@@ -933,5 +935,42 @@ public abstract class HsFragment extends Fragment implements HsUIConstant, HsHan
     @Override
     public void startPlayStore() {
         startPlayStore(getPackageName());
+    }
+
+    private DisplayMetrics getDisplayMetrics(){
+        WindowManager windowManager = (WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE);
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        windowManager.getDefaultDisplay().getMetrics(displayMetrics);
+        return displayMetrics;
+    }
+
+    @Override
+    public int getScreenWidthPixels() {
+        return getDisplayMetrics().widthPixels;
+    }
+
+    @Override
+    public int getScreenHeightPixels() {
+        return getDisplayMetrics().heightPixels;
+    }
+
+    @Override
+    public float getDensity() {
+        return getDisplayMetrics().density;
+    }
+
+    @Override
+    public float getDensityDpi() {
+        return getDisplayMetrics().densityDpi;
+    }
+
+    @Override
+    public float getXDpi() {
+        return getDisplayMetrics().xdpi;
+    }
+
+    @Override
+    public float getYDpi() {
+        return getDisplayMetrics().ydpi;
     }
 }

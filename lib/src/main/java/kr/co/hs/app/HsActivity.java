@@ -21,6 +21,8 @@ import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.DisplayMetrics;
+import android.view.WindowManager;
 import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
@@ -1213,5 +1215,42 @@ abstract public class HsActivity extends AppCompatActivity implements HsHandler.
     @Override
     public void startPlayStore() {
         startPlayStore(getPackageName());
+    }
+
+    private DisplayMetrics getDisplayMetrics(){
+        WindowManager windowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        windowManager.getDefaultDisplay().getMetrics(displayMetrics);
+        return displayMetrics;
+    }
+
+    @Override
+    public int getScreenWidthPixels() {
+        return getDisplayMetrics().widthPixels;
+    }
+
+    @Override
+    public int getScreenHeightPixels() {
+        return getDisplayMetrics().heightPixels;
+    }
+
+    @Override
+    public float getDensity() {
+        return getDisplayMetrics().density;
+    }
+
+    @Override
+    public float getDensityDpi() {
+        return getDisplayMetrics().densityDpi;
+    }
+
+    @Override
+    public float getXDpi() {
+        return getDisplayMetrics().xdpi;
+    }
+
+    @Override
+    public float getYDpi() {
+        return getDisplayMetrics().ydpi;
     }
 }
