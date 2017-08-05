@@ -1253,4 +1253,14 @@ abstract public class HsActivity extends AppCompatActivity implements HsHandler.
     public float getYDpi() {
         return getDisplayMetrics().ydpi;
     }
+
+    @Override
+    public void onEnterAnimationComplete() {
+        super.onEnterAnimationComplete();
+        onAfterCreated();
+    }
+
+    protected void onAfterCreated(){
+
+    }
 }
